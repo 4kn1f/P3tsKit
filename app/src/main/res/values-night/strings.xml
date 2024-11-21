@@ -2,4 +2,12 @@
 <resources>
     <string name="Scan">Scan</string>
     <string name="profile">Profile</string>
+    <string name="scan_your_pet">Scan Your Pet</string>
+    <string name="ChooseImage">Choose Image</string>
+    <string name="scan">Scan</string>
+    <string name="result_scan">Result Scan</string>
+    <string name="disease_description">Disease Description</string>
+    <string name="how_to_prevent">How to Prevent:</string>
+    <string name="prevention_steps">Prevention Steps</string>
+    <string name="history_scan">History Scan</string>
 </resources>
