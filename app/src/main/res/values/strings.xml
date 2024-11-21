@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">P3tsKit</string>
     <string name="title_home">Home</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Scan">Scan</string>
-    <string name="profile">Profile</string>
+    <string name="title_scan">Scan</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_history">History</string>
+    <string name="title_result_scan">Scan Result</string>
 </resources>
