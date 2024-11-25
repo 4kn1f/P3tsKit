@@ -13,4 +13,7 @@
     <string name="how_to_prevent">How to Prevent:</string>
     <string name="prevention_steps">Prevention Steps</string>
     <string name="history_scan">History Scan</string>
+    <string name="newsletter">Newsletter</string>
+    <string name="history">History</string>
+    <string name="hello_user">Hello!\n</string>
 </resources>
