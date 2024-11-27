@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">P3tsKit</string>
+    <string name="title_home">Home</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Scan">Scan</string>
     <string name="profile">Profile</string>
     <string name="scan_your_pet">Scan Your Pet</string>
@@ -10,4 +13,11 @@
     <string name="how_to_prevent">How to Prevent:</string>
     <string name="prevention_steps">Prevention Steps</string>
     <string name="history_scan">History Scan</string>
+    <string name="newsletter">Newsletter</string>
+    <string name="history">History</string>
+    <string name="hello_user">Hello!\n</string>
+    <string name="title_hello">Hello!</string>
+    <string name="user">Rukmini</string>
+    <string name="content_cat">This is cat card</string>
+    <string name="content_dog">This is dog card</string>
 </resources>
