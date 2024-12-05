@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,6 +9,12 @@ android {
     namespace = "com.application.p3tskit"
     compileSdk = 35
 
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(localPropertiesFile.inputStream())
+    }
+
     defaultConfig {
         applicationId = "com.application.p3tskit"
         minSdk = 29
@@ -15,6 +23,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"${localProperties["P3TSKIT_BASE_URL"]}\"")
+        buildConfigField("String", "NEWS_BASE_URL", "\"${localProperties["NEWS_BASE_URL"]}\"")
+        buildConfigField("String", "NEWS_API_TOKEN", "\"${localProperties["NEWS_API_TOKEN"]}\"")
     }
 
     buildTypes {
@@ -35,6 +47,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        buildConfig = true
     }
 }
 
