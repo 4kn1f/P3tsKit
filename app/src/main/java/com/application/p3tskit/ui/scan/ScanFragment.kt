@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,40 +17,48 @@ import com.application.p3tskit.data.pref.dataStore
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
 import com.application.p3tskit.data.remote.response.ModelScanResponse
 import com.application.p3tskit.data.remote.retrofit.ApiConfig
-import com.application.p3tskit.databinding.FragmentScanBinding
 import kotlinx.coroutines.launch
 
 class ScanFragment : Fragment() {
 
-    private var _binding: FragmentScanBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var diagnoseRepository: DiagnoseRepository
-    private var selectedImageUri: Uri? = null // Holds the selected image URI
+    private var selectedImageUri: Uri? = null
+    private lateinit var btnUpload: Button
+    private lateinit var btnScan: Button
+
+    private val pickImageResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+
+        uri?.let {
+            selectedImageUri = it
+            showToast("Image selected!")
+        } ?: showToast("No image selected.")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentScanBinding.inflate(inflater, container, false)
+        val view = inflater.inflate(R.layout.fragment_scan, container, false)
 
-        // Initialize DiagnoseRepository with ApiConfig and AuthPreferences
-        val apiService = ApiConfig.getApiService() // Use ApiConfig to get the ApiService
+        btnUpload = view.findViewById(R.id.buttonUpload)
+        btnScan = view.findViewById(R.id.buttonScan)
+
+        val apiService = ApiConfig.getApiService()
         val authPreferences = AuthPreferences.getInstance(requireContext().dataStore)
         diagnoseRepository = DiagnoseRepository(apiService, authPreferences)
 
         setupButtonListeners()
 
-        return binding.root
+        return view
     }
 
     private fun setupButtonListeners() {
-        binding.buttonUpload.setOnClickListener {
-            // Open image picker (implement as needed)
+        btnUpload.setOnClickListener {
+            // Open image picker
             pickImageFromGallery()
         }
 
-        binding.buttonScan.setOnClickListener {
+        btnScan.setOnClickListener {
             selectedImageUri?.let {
                 performDiagnosis(it)
             } ?: showToast("Please select an image first!")
@@ -88,10 +98,6 @@ class ScanFragment : Fragment() {
 
     private fun pickImageFromGallery() {
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        pickImageResult.launch("image/*")
     }
 }
