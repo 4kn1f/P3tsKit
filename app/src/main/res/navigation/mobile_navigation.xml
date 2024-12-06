@@ -22,4 +22,10 @@
         android:name="com.application.p3tskit.ui.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/action_scanFragment_to_detailScanFragment"
+        android:name="com.application.p3tskit.ui.scan.DetailScanFragment"
+        android:label="@string/Scan"
+        tools:layout="@layout/fragment_detail_scan_page" />
 </navigation>
