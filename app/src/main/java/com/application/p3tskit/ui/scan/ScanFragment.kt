@@ -16,8 +16,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.application.p3tskit.R
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
+import com.application.p3tskit.data.pref.AuthPreferences
+import com.application.p3tskit.data.remote.repository.DiagnoseRepository
+import com.application.p3tskit.data.remote.retrofit.ApiConfig
 
 class ScanFragment : Fragment() {
 
@@ -31,43 +38,37 @@ class ScanFragment : Fragment() {
     private lateinit var cameraLauncher: ActivityResultLauncher<Uri>
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
+    private lateinit var viewModel: DetailScanViewModel
+    private lateinit var authPreferences: AuthPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Permission launcher for camera
+        authPreferences = AuthPreferences.getInstance(requireActivity().applicationContext)
+
+        val diagnoseRepository = DiagnoseRepository(ApiConfig.getApiService(), authPreferences, requireContext())
+        val factory = DetailScanViewModelFactory(diagnoseRepository, authPreferences, requireActivity().application)
+        viewModel = ViewModelProvider(this, factory).get(DetailScanViewModel::class.java)
+
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                openCamera()
-            } else {
-                showToast("Camera permission is required to capture photos.")
-            }
+            if (isGranted) openCamera() else showToast("Camera permission required.")
         }
 
-        // Image picker launcher
-        pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 capturedImageUri = it
                 displayCapturedImage(it)
-            } ?: showToast("No image selected.")
+            }
         }
 
-        // Camera launcher
         cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if (success) {
-                capturedImageUri?.let {
-                    displayCapturedImage(it)
-                    showToast("Photo captured successfully!")
-                }
-            } else {
-                showToast("Photo capture failed.")
-            }
+            if (success) capturedImageUri?.let { displayCapturedImage(it) }
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_scan, container, false)
 
         btnGallery = view.findViewById(R.id.buttonGallery)
@@ -75,35 +76,18 @@ class ScanFragment : Fragment() {
         btnScan = view.findViewById(R.id.buttonScan)
         imageView = view.findViewById(R.id.scanImage)
 
-        btnCamera.setOnClickListener {
-            checkCameraPermission()
-        }
-
-        btnGallery.setOnClickListener {
-            pickImageFromGallery()
-        }
-
-        btnScan.setOnClickListener {
-            capturedImageUri?.let {
-                showToast("Uploading image...")
-                // Add upload logic here
-            } ?: showToast("No image to upload.")
-        }
+        btnCamera.setOnClickListener { checkCameraPermission() }
+        btnGallery.setOnClickListener { pickImageFromGallery() }
+        btnScan.setOnClickListener { uploadImage() }
 
         return view
     }
 
     private fun checkCameraPermission() {
         when {
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
-                openCamera()
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
-                showToast("Camera permission is required to capture photos.")
-            }
-            else -> {
-                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-            }
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> openCamera()
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> showToast("Camera permission required.")
+            else -> requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 
@@ -121,18 +105,62 @@ class ScanFragment : Fragment() {
             capturedImageUri = photoUri
             cameraLauncher.launch(photoUri)
         } else {
-            showToast("Failed to create MediaStore entry.")
+            showToast("Failed to create image file. Please check permissions.")
         }
     }
 
-    private fun pickImageFromGallery() {
-        pickImageLauncher.launch("image/*")
-    }
+    private fun pickImageFromGallery() = pickImageLauncher.launch("image/*")
 
     private fun displayCapturedImage(uri: Uri) {
-        Glide.with(this)
-            .load(uri)
-            .into(imageView)
+        Glide.with(this).load(uri).into(imageView)
+    }
+
+    private fun uploadImage() {
+        capturedImageUri?.let { uri ->
+            showToast("Uploading image...")
+
+            lifecycleScope.launch {
+                try {
+                    viewModel.analyzeImage(uri)
+
+                    viewModel.scanResult.observe(viewLifecycleOwner) { scanResponse ->
+                        scanResponse?.let {
+                            val diseaseInfo = it.diseaseInfo
+
+                            if (diseaseInfo == null) {
+                                showToast("No disease information available.")
+                            }
+
+                            val bundle = Bundle().apply {
+                                putParcelable("scan_result", it)
+                                putParcelable("image_uri", uri)
+                            }
+
+                            diseaseInfo?.let {
+                                bundle.putParcelable("disease_info", it)
+                            }
+
+                            findNavController().navigate(
+                                R.id.action_scanFragment_to_detailScanFragment,
+                                bundle
+                            )
+
+                            if (it.predictedClass == "Sorry, disease cannot be detected") {
+                                showToast("Disease could not be detected. Please try again.")
+                            }
+                        }
+                    }
+
+                    viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                        errorMessage?.let {
+                            showToast(it)
+                        }
+                    }
+                } catch (e: Exception) {
+                    showToast("Error: ${e.message}")
+                }
+            }
+        } ?: showToast("No image selected.")
     }
 
     private fun showToast(message: String) {

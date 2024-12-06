@@ -1,28 +1,28 @@
 package com.application.p3tskit.data.remote.repository
 
+import ModelScanResponse
+import android.content.Context
 import android.net.Uri
+import android.provider.MediaStore
 import com.application.p3tskit.data.pref.AuthPreferences
-import com.application.p3tskit.data.remote.response.ModelScanResponse
 import com.application.p3tskit.data.remote.retrofit.ApiService
-import kotlinx.coroutines.flow.first
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Response
-import java.io.File
 
 class DiagnoseRepository(
     private val apiService: ApiService,
-    private val authPreferences: AuthPreferences
+    private val authPreferences: AuthPreferences,
+    private val context: Context
 ) {
-    suspend fun diagnoseImage(imageUri: Uri): Response<ModelScanResponse>? {
-        val authModel = authPreferences.getSession().first()
-        val token = "Bearer ${authModel.token}"
+    suspend fun diagnoseImage(authToken: String, imagePart: MultipartBody.Part): Response<ModelScanResponse>? {
+        return apiService.getDiagnosed(authToken, imagePart)
+    }
 
-        val imageFile = File(imageUri.path!!)
-        val requestFile = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
-        val body = MultipartBody.Part.createFormData("file", imageFile.name, requestFile)
-
-        return apiService.getDiagnosed(token, body)
+    private fun getRealPathFromURI(contentUri: Uri): String {
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+        val columnIndex = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor?.moveToFirst()
+        return cursor?.getString(columnIndex!!) ?: ""
     }
 }

@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 
-class AuthPreferences private constructor(private val dataStore: DataStore<Preferences>)  {
+class AuthPreferences private constructor(private val dataStore: DataStore<Preferences>) {
 
-    suspend fun saveSession(user: AuthModel){
+    suspend fun saveSession(user: AuthModel) {
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
             preferences[TOKEN_KEY] = user.token
@@ -23,28 +23,28 @@ class AuthPreferences private constructor(private val dataStore: DataStore<Prefe
     fun getSession(): Flow<AuthModel> {
         return dataStore.data.map { preferences ->
             AuthModel(
-                preferences[EMAIL_KEY]?:" ",
-                preferences[TOKEN_KEY]?:" ",
+                preferences[EMAIL_KEY] ?: "",
+                preferences[TOKEN_KEY] ?: ""
             )
         }
     }
 
-    suspend fun logout(){
+    suspend fun logout() {
         dataStore.edit { preferences ->
             preferences.clear()
         }
     }
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: AuthPreferences? = null
 
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
 
-        fun getInstance(dataStore: DataStore<Preferences>): AuthPreferences {
+        fun getInstance(context: Context): AuthPreferences {
             return INSTANCE ?: synchronized(this) {
-                val instance = AuthPreferences(dataStore)
+                val instance = AuthPreferences(context.dataStore)
                 INSTANCE = instance
                 instance
             }

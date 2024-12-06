@@ -53,8 +53,15 @@ android {
 
 dependencies {
 
+    //viewmodel
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+
+    // coroutines
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
     //datastore
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation (libs.androidx.datastore.preferences)
 
     //glide
     implementation (libs.glide)

@@ -1,39 +1,78 @@
-package com.application.p3tskit.data.remote.response
-
-import com.google.gson.annotations.SerializedName
+import android.os.Parcel
+import android.os.Parcelable
 
 data class ModelScanResponse(
+	val diseaseInfo: DiseaseInfo?,
+	val predictedClass: String?,
+	val userId: String?,
+	val createdAt: Long
+) : Parcelable {
+	constructor(parcel: Parcel) : this(
+		parcel.readParcelable(DiseaseInfo::class.java.classLoader),
+		parcel.readString(),
+		parcel.readString(),
+		parcel.readLong()
+	)
 
-	@field:SerializedName("createdAt")
-	val createdAt: Long? = null,
+	override fun writeToParcel(parcel: Parcel, flags: Int) {
+		parcel.writeParcelable(diseaseInfo, flags)
+		parcel.writeString(predictedClass)
+		parcel.writeString(userId)
+		parcel.writeLong(createdAt)
+	}
 
-	@field:SerializedName("disease_info")
-	val diseaseInfo: DiseaseInfo? = null,
+	override fun describeContents(): Int {
+		return 0
+	}
 
-	@field:SerializedName("user_id")
-	val userId: String? = null,
+	companion object CREATOR : Parcelable.Creator<ModelScanResponse> {
+		override fun createFromParcel(parcel: Parcel): ModelScanResponse {
+			return ModelScanResponse(parcel)
+		}
 
-	@field:SerializedName("predicted_class")
-	val predictedClass: String? = null
-)
+		override fun newArray(size: Int): Array<ModelScanResponse?> {
+			return arrayOfNulls(size)
+		}
+	}
+}
 
 data class DiseaseInfo(
+	val causes: String?,
+	val description: String?,
+	val note: String?,
+	val symptoms: List<String> = emptyList(),
+	val treatment: List<String> = emptyList(),
+	val source: List<String> = emptyList()
+) : Parcelable {
+	constructor(parcel: Parcel) : this(
+		parcel.readString(),
+		parcel.readString(),
+		parcel.readString(),
+		parcel.createStringArrayList() ?: emptyList(),
+		parcel.createStringArrayList() ?: emptyList(),
+		parcel.createStringArrayList() ?: emptyList()
+	)
 
-	@field:SerializedName("symptoms")
-	val symptoms: String? = null,
+	override fun writeToParcel(parcel: Parcel, flags: Int) {
+		parcel.writeString(causes)
+		parcel.writeString(description)
+		parcel.writeString(note)
+		parcel.writeStringList(symptoms)
+		parcel.writeStringList(treatment)
+		parcel.writeStringList(source)
+	}
 
-	@field:SerializedName("note")
-	val note: String? = null,
+	override fun describeContents(): Int {
+		return 0
+	}
 
-	@field:SerializedName("treatment")
-	val treatment: List<String?>? = null,
+	companion object CREATOR : Parcelable.Creator<DiseaseInfo> {
+		override fun createFromParcel(parcel: Parcel): DiseaseInfo {
+			return DiseaseInfo(parcel)
+		}
 
-	@field:SerializedName("causes")
-	val causes: List<String?>? = null,
-
-	@field:SerializedName("description")
-	val description: String? = null,
-
-	@field:SerializedName("source")
-	val source: List<String?>? = null
-)
+		override fun newArray(size: Int): Array<DiseaseInfo?> {
+			return arrayOfNulls(size)
+		}
+	}
+}

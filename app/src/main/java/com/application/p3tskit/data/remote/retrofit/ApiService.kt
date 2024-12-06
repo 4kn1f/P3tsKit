@@ -1,10 +1,10 @@
 package com.application.p3tskit.data.remote.retrofit
 
+import ModelScanResponse
 import com.application.p3tskit.data.remote.response.LoginRequest
 import com.application.p3tskit.data.remote.response.LoginResponse
 import com.application.p3tskit.data.remote.response.RegisterRequest
 import com.application.p3tskit.data.remote.response.RegisterResponse
-import com.application.p3tskit.data.remote.response.ModelScanResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
