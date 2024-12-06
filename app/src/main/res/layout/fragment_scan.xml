@@ -29,7 +29,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonUpload"
+            android:id="@+id/buttonCamera"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -40,9 +40,20 @@
         <Button
             android:id="@+id/buttonScan"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/scan"
             android:textColor="@color/white" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/upload" />
+
 </LinearLayout>
