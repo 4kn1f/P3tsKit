@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.application.p3tskit.data.pref.dataStore
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
 import com.application.p3tskit.data.remote.response.ModelScanResponse
 import com.application.p3tskit.data.remote.retrofit.ApiConfig
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 
 class ScanFragment : Fragment() {
@@ -25,12 +27,13 @@ class ScanFragment : Fragment() {
     private var selectedImageUri: Uri? = null
     private lateinit var btnUpload: Button
     private lateinit var btnScan: Button
+    private lateinit var imageView: ImageView
 
     private val pickImageResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-
         uri?.let {
             selectedImageUri = it
             showToast("Image selected!")
+            displayImage(uri)
         } ?: showToast("No image selected.")
     }
 
@@ -42,6 +45,7 @@ class ScanFragment : Fragment() {
 
         btnUpload = view.findViewById(R.id.buttonUpload)
         btnScan = view.findViewById(R.id.buttonScan)
+        imageView = view.findViewById(R.id.scanImage)
 
         val apiService = ApiConfig.getApiService()
         val authPreferences = AuthPreferences.getInstance(requireContext().dataStore)
@@ -54,7 +58,6 @@ class ScanFragment : Fragment() {
 
     private fun setupButtonListeners() {
         btnUpload.setOnClickListener {
-            // Open image picker
             pickImageFromGallery()
         }
 
@@ -97,7 +100,12 @@ class ScanFragment : Fragment() {
     }
 
     private fun pickImageFromGallery() {
-
         pickImageResult.launch("image/*")
+    }
+
+    private fun displayImage(uri: Uri) {
+        Glide.with(this)
+            .load(uri)
+            .into(imageView)
     }
 }
