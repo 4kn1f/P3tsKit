@@ -8,10 +8,6 @@
     <string name="scan_your_pet">Scan Your Pet</string>
     <string name="ChooseImage">Choose Image</string>
     <string name="scan">Scan</string>
-    <string name="result_scan">Result Scan</string>
-    <string name="disease_description">Disease Description</string>
-    <string name="how_to_prevent">How to Prevent:</string>
-    <string name="prevention_steps">Prevention Steps</string>
     <string name="history_scan">History Scan</string>
     <string name="newsletter">Newsletter</string>
     <string name="history">History</string>
@@ -30,4 +26,12 @@
     <string name="image_preview">ImagePreview</string>
     <string name="camera">Camera</string>
     <string name="camera_preview">Camera Preview</string>
+    <string name="cause">Cause:</string>
+    <string name="note">Note\n</string>
+    <string name="source">"Source: "</string>
+    <string name="treatment">Treatment:\n</string>
+    <string name="symptoms">Symptoms:\n</string>
+    <string name="description">Description:\n</string>
+    <string name="causes">"Causes: "</string>
+    <string name="scan_result">Scan Result</string>
 </resources>
