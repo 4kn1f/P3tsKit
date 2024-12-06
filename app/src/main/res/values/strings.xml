@@ -20,4 +20,10 @@
     <string name="user">Rukmini</string>
     <string name="content_cat">This is cat card</string>
     <string name="content_dog">This is dog card</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="login_redirect">Already have an account? Login now!</string>
 </resources>
