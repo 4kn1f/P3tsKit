@@ -27,4 +27,7 @@
     <string name="login">Login</string>
     <string name="login_redirect">Already have an account? Login now!</string>
     <string name="upload">Upload</string>
+    <string name="image_preview">ImagePreview</string>
+    <string name="camera">Camera</string>
+    <string name="camera_preview">Camera Preview</string>
 </resources>
