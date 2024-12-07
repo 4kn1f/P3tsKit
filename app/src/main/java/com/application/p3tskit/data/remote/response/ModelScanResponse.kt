@@ -2,12 +2,13 @@ package com.application.p3tskit.data.remote.response
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 
 data class ModelScanResponse(
-	val diseaseInfo: DiseaseInfo?,
-	val predictedClass: String?,
-	val userId: String?,
-	val createdAt: Long
+	@SerializedName("disease_info") val diseaseInfo: DiseaseInfo?,
+	@SerializedName("predicted_class") val predictedClass: String?,
+	@SerializedName("user_id") val userId: String?,
+	@SerializedName("createdAt") val createdAt: Long
 ) : Parcelable {
 
 	constructor(parcel: Parcel) : this(
@@ -38,19 +39,19 @@ data class ModelScanResponse(
 }
 
 data class DiseaseInfo(
-	val causes: List<String> = emptyList(),
-	val description: String?,
-	val note: String?,
-	val symptoms: List<String> = emptyList(), // Keep this as a List<String>
-	val treatment: List<String> = emptyList(),
-	val source: List<String> = emptyList()
+	@SerializedName("causes") val causes: List<String> = emptyList(),
+	@SerializedName("description") val description: String?,
+	@SerializedName("note") val note: String?,
+	@SerializedName("symptoms") val symptoms: List<String> = emptyList(),
+	@SerializedName("treatment") val treatment: List<String> = emptyList(),
+	@SerializedName("source") val source: List<String> = emptyList()
 ) : Parcelable {
 
 	constructor(parcel: Parcel) : this(
 		parcel.createStringArrayList() ?: emptyList(),
 		parcel.readString(),
 		parcel.readString(),
-		parcel.createStringArrayList() ?: emptyList(), // This will be a List<String> in all cases
+		parcel.createStringArrayList() ?: emptyList(),
 		parcel.createStringArrayList() ?: emptyList(),
 		parcel.createStringArrayList() ?: emptyList()
 	)
@@ -59,7 +60,7 @@ data class DiseaseInfo(
 		parcel.writeStringList(causes)
 		parcel.writeString(description)
 		parcel.writeString(note)
-		parcel.writeStringList(symptoms) // Write as a List<String>
+		parcel.writeStringList(symptoms)
 		parcel.writeStringList(treatment)
 		parcel.writeStringList(source)
 	}
@@ -76,4 +77,3 @@ data class DiseaseInfo(
 		}
 	}
 }
-

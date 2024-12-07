@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.application.p3tskit.data.pref.AuthPreferences
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
 import com.application.p3tskit.data.remote.response.ModelScanResponse
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -55,13 +54,17 @@ class DetailScanViewModel(
                             _errorMessage.postValue("Error: No data received.")
                         }
                     } else {
-                        _errorMessage.postValue("Error: ${response?.message() ?: "Unknown error"}")
+                        val errorMsg = response?.message() ?: "Unknown error"
+                        _errorMessage.postValue("Error: $errorMsg")
+                        Log.e("DetailScanViewModel", "API Error: $errorMsg")
                     }
                 } else {
                     _errorMessage.postValue("Error: Image file does not exist.")
+                    Log.e("DetailScanViewModel", "Image file does not exist.")
                 }
             } catch (e: Exception) {
                 _errorMessage.postValue("Error: ${e.message}")
+                Log.e("DetailScanViewModel", "Exception: ${e.message}", e)
             }
         }
     }
@@ -84,4 +87,3 @@ class DetailScanViewModel(
         return tempFile
     }
 }
-
