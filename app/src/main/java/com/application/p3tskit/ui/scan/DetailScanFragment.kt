@@ -101,31 +101,34 @@ class DetailScanFragment : Fragment() {
     private fun updateUIWithScanResult(result: ModelScanResponse) {
         Log.d("DetailScanFragment", "Received result: $result")
 
-        predictedClassTextView.text = "Diagnosis: ${result.predictedClass ?: "Not available"}"
+        predictedClassTextView.text =
+            getString(R.string.diagnosis, result.predictedClass ?: "Not available")
 
         if (result.diseaseInfo != null) {
             val diseaseInfo = result.diseaseInfo
 
-            diseaseInfoTextView.text = diseaseInfo.description ?: "Description: Not Available"
+            diseaseInfoTextView.text =
+                getString(R.string.descriptions, diseaseInfo.description ?: "Not Available")
 
-            val symptoms = diseaseInfo.symptoms.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Symptoms: Not Available"
-            symptomsTextView.text = symptoms
+            val symptoms = diseaseInfo.symptoms.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Not Available"
+            symptomsTextView.text = "Symptoms: $symptoms"
 
-            val treatment = diseaseInfo.treatment.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Treatment: Not Available"
-            treatmentTextView.text = treatment
+            val treatment = diseaseInfo.treatment.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Not Available"
+            treatmentTextView.text = "Treatment: $treatment"
 
-            noteTextView.text = diseaseInfo.note ?: "Note: Not Available"
+            noteTextView.text = "Note: ${diseaseInfo.note ?: "Not Available"}"
 
-            val source = diseaseInfo.source.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Source: Not Available"
-            sourceTextView.text = source
+            val source = diseaseInfo.source.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Not Available"
+            sourceTextView.text = "Source: $source"
+
         } else {
             Log.e("DetailScanFragment", "Disease info is null, using default values")
 
-            diseaseInfoTextView.text = getString(R.string.description_not_available)
-            symptomsTextView.text = getString(R.string.symptoms_not_available)
-            treatmentTextView.text = getString(R.string.treatment_not_available)
-            noteTextView.text = getString(R.string.note_not_available)
-            sourceTextView.text = getString(R.string.source_not_available)
+            diseaseInfoTextView.text = "Description: ${getString(R.string.description_not_available)}"
+            symptomsTextView.text = "Symptoms: ${getString(R.string.symptoms_not_available)}"
+            treatmentTextView.text = "Treatment: ${getString(R.string.treatment_not_available)}"
+            noteTextView.text = "Note: ${getString(R.string.note_not_available)}"
+            sourceTextView.text = "Source: ${getString(R.string.source_not_available)}"
         }
     }
 

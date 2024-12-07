@@ -39,4 +39,6 @@
     <string name="treatment_not_available">Treatment: Not Available</string>
     <string name="note_not_available">Note: Not Available</string>
     <string name="source_not_available">Source: Not Available</string>
+    <string name="diagnosis">Diagnosis: %1$s</string>
+    <string name="descriptions">Descriptions: %1$s</string>
 </resources>
