@@ -90,21 +90,35 @@ class DetailScanFragment : Fragment() {
                 .into(imageView)
         }
     }
-
     private fun updateUIWithScanResult(result: ModelScanResponse) {
+        Log.d("DetailScanFragment", "Received result: $result")
 
         predictedClassTextView.text = "Diagnosis: ${result.predictedClass ?: "Not available"}"
 
-        diseaseInfoTextView.text = result.diseaseInfo?.description ?: "Description not available"
+        if (result.diseaseInfo != null) {
+            val diseaseInfo = result.diseaseInfo
 
-        val symptoms = result.diseaseInfo?.symptoms?.joinToString("\n") ?: "No symptoms available"
-        symptomsTextView.text = symptoms
+            diseaseInfoTextView.text = diseaseInfo.description ?: "Description: Not Available"
 
-        val treatment = result.diseaseInfo?.treatment?.joinToString("\n") ?: "No treatment available"
-        treatmentTextView.text = treatment
+            val symptoms = diseaseInfo.symptoms.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Symptoms: Not Available"
+            symptomsTextView.text = symptoms
 
-        noteTextView.text = result.diseaseInfo?.note ?: "No additional notes"
+            val treatment = diseaseInfo.treatment.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Treatment: Not Available"
+            treatmentTextView.text = treatment
 
-        sourceTextView.text = result.diseaseInfo?.source?.joinToString("\n") ?: "No sources available"
+            noteTextView.text = diseaseInfo.note ?: "Note: Not Available"
+
+            val source = diseaseInfo.source.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Source: Not Available"
+            sourceTextView.text = source
+        } else {
+            Log.e("DetailScanFragment", "Disease info is null, using default values")
+
+            diseaseInfoTextView.text = getString(R.string.description_not_available)
+            symptomsTextView.text = getString(R.string.symptoms_not_available)
+            treatmentTextView.text = getString(R.string.treatment_not_available)
+            noteTextView.text = getString(R.string.note_not_available)
+            sourceTextView.text = getString(R.string.source_not_available)
+        }
     }
+
 }
