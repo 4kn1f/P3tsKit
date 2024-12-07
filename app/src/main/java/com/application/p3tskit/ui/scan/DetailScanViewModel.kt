@@ -1,27 +1,25 @@
 package com.application.p3tskit.ui.scan
 
-import ModelScanResponse
 import android.app.Application
-import android.content.ContentResolver
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.application.p3tskit.data.remote.repository.DiagnoseRepository
 import com.application.p3tskit.data.pref.AuthPreferences
+import com.application.p3tskit.data.remote.repository.DiagnoseRepository
+import com.application.p3tskit.data.remote.response.ModelScanResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import java.io.FileOutputStream
 
 class DetailScanViewModel(
     private val diagnoseRepository: DiagnoseRepository,
@@ -86,3 +84,4 @@ class DetailScanViewModel(
         return tempFile
     }
 }
+

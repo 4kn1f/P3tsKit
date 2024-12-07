@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,6 @@ import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import com.application.p3tskit.data.pref.AuthPreferences
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
-import com.application.p3tskit.data.remote.retrofit.ApiConfig
 
 class ScanFragment : Fragment() {
 
@@ -44,12 +44,19 @@ class ScanFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Initialize AuthPreferences
         authPreferences = AuthPreferences.getInstance(requireActivity().applicationContext)
 
-        val diagnoseRepository = DiagnoseRepository(ApiConfig.getApiService(), authPreferences, requireContext())
+        // Get an instance of DiagnoseRepository using getInstance()
+        val diagnoseRepository = DiagnoseRepository.getInstance(requireContext())
+
+        // Create ViewModelFactory
         val factory = DetailScanViewModelFactory(diagnoseRepository, authPreferences, requireActivity().application)
+
+        // Initialize ViewModel
         viewModel = ViewModelProvider(this, factory).get(DetailScanViewModel::class.java)
 
+        // Initialize ActivityResultLaunchers
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) openCamera() else showToast("Camera permission required.")
         }
@@ -124,39 +131,47 @@ class ScanFragment : Fragment() {
                     viewModel.analyzeImage(uri)
 
                     viewModel.scanResult.observe(viewLifecycleOwner) { scanResponse ->
-                        scanResponse?.let {
-                            val diseaseInfo = it.diseaseInfo
+                        scanResponse?.let { response ->
+                            // Log the response to ensure it has the expected format
+                            Log.d("ScanResult", "Received scan result: $response")
 
-                            if (diseaseInfo == null) {
-                                showToast("No disease information available.")
-                            }
+                            val predictedClass = response.predictedClass
 
-                            val bundle = Bundle().apply {
-                                putParcelable("scan_result", it)
-                                putParcelable("image_uri", uri)
-                            }
+                            // Check if predictedClass is non-empty
+                            if (predictedClass.isNullOrEmpty()) {
+                                showToast("No disease detected. Please try again.")
+                            } else {
+                                // Proceed with the disease details if detected
+                                showToast("Disease detected: $predictedClass")
 
-                            diseaseInfo?.let {
-                                bundle.putParcelable("disease_info", it)
-                            }
+                                val diseaseInfo = response.diseaseInfo
+                                val bundle = Bundle().apply {
+                                    putParcelable("scan_result", response)
+                                    putParcelable("image_uri", uri)
+                                }
 
-                            findNavController().navigate(
-                                R.id.action_scanFragment_to_detailScanFragment,
-                                bundle
-                            )
+                                diseaseInfo?.let {
+                                    bundle.putParcelable("disease_info", it)
+                                }
 
-                            if (it.predictedClass == "Sorry, disease cannot be detected") {
-                                showToast("Disease could not be detected. Please try again.")
+                                // Navigate to the detail screen with the disease information
+                                findNavController().navigate(
+                                    R.id.action_scanFragment_to_detailScanFragment,
+                                    bundle
+                                )
                             }
                         }
                     }
 
+                    // Handle errors
                     viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
                         errorMessage?.let {
                             showToast(it)
                         }
                     }
+
                 } catch (e: Exception) {
+                    // Handle unexpected errors
                     showToast("Error: ${e.message}")
                 }
             }

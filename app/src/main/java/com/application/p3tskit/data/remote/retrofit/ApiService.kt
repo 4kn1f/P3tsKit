@@ -1,6 +1,6 @@
 package com.application.p3tskit.data.remote.retrofit
 
-import ModelScanResponse
+import com.application.p3tskit.data.remote.response.ModelScanResponse
 import com.application.p3tskit.data.remote.response.LoginRequest
 import com.application.p3tskit.data.remote.response.LoginResponse
 import com.application.p3tskit.data.remote.response.RegisterRequest
