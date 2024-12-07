@@ -44,19 +44,14 @@ class ScanFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize AuthPreferences
         authPreferences = AuthPreferences.getInstance(requireActivity().applicationContext)
 
-        // Get an instance of DiagnoseRepository using getInstance()
         val diagnoseRepository = DiagnoseRepository.getInstance(requireContext())
 
-        // Create ViewModelFactory
         val factory = DetailScanViewModelFactory(diagnoseRepository, authPreferences, requireActivity().application)
 
-        // Initialize ViewModel
         viewModel = ViewModelProvider(this, factory).get(DetailScanViewModel::class.java)
 
-        // Initialize ActivityResultLaunchers
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) openCamera() else showToast("Camera permission required.")
         }
@@ -132,16 +127,13 @@ class ScanFragment : Fragment() {
 
                     viewModel.scanResult.observe(viewLifecycleOwner) { scanResponse ->
                         scanResponse?.let { response ->
-                            // Log the response to ensure it has the expected format
                             Log.d("ScanResult", "Received scan result: $response")
 
                             val predictedClass = response.predictedClass
 
-                            // Check if predictedClass is non-empty
                             if (predictedClass.isNullOrEmpty()) {
                                 showToast("No disease detected. Please try again.")
                             } else {
-                                // Proceed with the disease details if detected
                                 showToast("Disease detected: $predictedClass")
 
                                 val diseaseInfo = response.diseaseInfo
@@ -154,7 +146,6 @@ class ScanFragment : Fragment() {
                                     bundle.putParcelable("disease_info", it)
                                 }
 
-                                // Navigate to the detail screen with the disease information
                                 findNavController().navigate(
                                     R.id.action_scanFragment_to_detailScanFragment,
                                     bundle
@@ -163,7 +154,6 @@ class ScanFragment : Fragment() {
                         }
                     }
 
-                    // Handle errors
                     viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
                         errorMessage?.let {
                             showToast(it)
@@ -171,7 +161,6 @@ class ScanFragment : Fragment() {
                     }
 
                 } catch (e: Exception) {
-                    // Handle unexpected errors
                     showToast("Error: ${e.message}")
                 }
             }

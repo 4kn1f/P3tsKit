@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +27,7 @@ class DetailScanFragment : Fragment() {
     private lateinit var imageView: ImageView
     private lateinit var sourceTextView: TextView
     private lateinit var noteTextView: TextView
+    private lateinit var progressBar: ProgressBar
     private lateinit var viewModel: DetailScanViewModel
 
     override fun onCreateView(
@@ -40,6 +42,7 @@ class DetailScanFragment : Fragment() {
         imageView = view.findViewById(R.id.result_image)
         sourceTextView = view.findViewById(R.id.tv_source)
         noteTextView = view.findViewById(R.id.tv_note)
+        progressBar = view.findViewById(R.id.progress_bar)
 
         return view
     }
@@ -54,7 +57,10 @@ class DetailScanFragment : Fragment() {
         )
         viewModel = ViewModelProvider(this, factory)[DetailScanViewModel::class.java]
 
+        progressBar.visibility = View.VISIBLE
+
         viewModel.scanResult.observe(viewLifecycleOwner) { result ->
+            progressBar.visibility = View.GONE
             result?.let {
                 if (it.predictedClass != null) {
                     updateUIWithScanResult(it)
@@ -67,6 +73,7 @@ class DetailScanFragment : Fragment() {
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            progressBar.visibility = View.GONE
             if (!error.isNullOrEmpty()) {
                 Log.e("DetailScanFragment", "Error: $error")
             }
@@ -78,6 +85,7 @@ class DetailScanFragment : Fragment() {
         if (scanResultJson != null) {
             val scanResult = Gson().fromJson(scanResultJson, ModelScanResponse::class.java)
             updateUIWithScanResult(scanResult)
+            progressBar.visibility = View.GONE
         } else if (imageUri != null) {
             viewModel.analyzeImage(imageUri)
         }
