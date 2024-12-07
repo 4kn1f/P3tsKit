@@ -19,7 +19,6 @@ class DetailScanFragment : Fragment() {
     private lateinit var treatmentTextView: TextView
     private lateinit var predictedClassTextView: TextView
     private lateinit var imageView: ImageView
-    private lateinit var causeTextView: TextView
     private lateinit var descriptionTextView: TextView
     private lateinit var sourceTextView: TextView
     private lateinit var noteTextView: TextView
@@ -29,13 +28,11 @@ class DetailScanFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail_scan_page, container, false)
 
+        predictedClassTextView = view.findViewById(R.id.tv_predicted_class)
         diseaseInfoTextView = view.findViewById(R.id.tv_result_description)
         symptomsTextView = view.findViewById(R.id.symptoms)
         treatmentTextView = view.findViewById(R.id.tv_treatment)
-        predictedClassTextView = view.findViewById(R.id.tv_cause)
         imageView = view.findViewById(R.id.result_image)
-        causeTextView = view.findViewById(R.id.tv_cause)
-        descriptionTextView = view.findViewById(R.id.tv_result_description)
         sourceTextView = view.findViewById(R.id.tv_source)
         noteTextView = view.findViewById(R.id.tv_note)
 
@@ -43,17 +40,14 @@ class DetailScanFragment : Fragment() {
         val imageUri: Uri? = arguments?.getParcelable("image_uri")
 
         scanResult?.let { result ->
-
-            val diseaseInfo = result.diseaseInfo
-
-            descriptionTextView.text = diseaseInfo?.description ?: "Description not available"
-            symptomsTextView.text = diseaseInfo?.symptoms?.joinToString("\n")?.takeIf { it.isNotEmpty() }
-                ?: "No symptoms available"
-            treatmentTextView.text = diseaseInfo?.treatment?.joinToString("\n")?.takeIf { it.isNotEmpty() }
-                ?: "No treatment available"
             predictedClassTextView.text = "Diagnosis: ${result.predictedClass ?: "Not available"}"
-            noteTextView.text = diseaseInfo?.note ?: "No additional notes"
-            sourceTextView.text = diseaseInfo?.source?.joinToString("\n")?.takeIf { it.isNotEmpty() }
+            diseaseInfoTextView.text = result.diseaseInfo?.description ?: "Description not available"
+            symptomsTextView.text = result.diseaseInfo?.symptoms?.joinToString("\n")?.takeIf { it.isNotEmpty() }
+                ?: "No symptoms available"
+            treatmentTextView.text = result.diseaseInfo?.treatment?.joinToString("\n")?.takeIf { it.isNotEmpty() }
+                ?: "No treatment available"
+            noteTextView.text = result.diseaseInfo?.note ?: "No additional notes"
+            sourceTextView.text = result.diseaseInfo?.source?.joinToString("\n")?.takeIf { it.isNotEmpty() }
                 ?: "No sources available"
 
             imageUri?.let { uri ->

@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.application.p3tskit.data.di.Injection
 import com.application.p3tskit.data.remote.repository.AuthRepository
+import com.application.p3tskit.ui.home.HomeViewModel
 import com.application.p3tskit.ui.login.LoginViewModel
+import com.application.p3tskit.ui.profile.ProfileViewModel
 import com.application.p3tskit.ui.register.RegisterViewModel
 
 class ViewModelFactory(private val authRepository: AuthRepository): ViewModelProvider.NewInstanceFactory() {
@@ -18,6 +20,12 @@ class ViewModelFactory(private val authRepository: AuthRepository): ViewModelPro
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) ->{
                 LoginViewModel(authRepository) as T
+            }
+            modelClass.isAssignableFrom(HomeViewModel::class.java) ->{
+                HomeViewModel(authRepository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) ->{
+                ProfileViewModel(authRepository) as T
             }
             else -> throw IllegalArgumentException("Error")
         }

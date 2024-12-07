@@ -31,12 +31,12 @@ class LoginViewModel(private val authRepository: AuthRepository): ViewModel() {
                 if (loginResponse != null) {
                     _loginResult.value = loginResponse
                     loginResponse.token?.let { token ->
-                        saveSession(AuthModel(email = email, token = token))
+                        saveSession(AuthModel(email = email, token = token, true))
                     } ?: run {
-                        _errorMessage.value = "Token is missing"
+                        _errorMessage.value = "Token not found"
                     }
                 } else {
-                    _errorMessage.value = "Login failed"
+                    _errorMessage.value = result.exceptionOrNull()?.message ?: "Login failed"
                 }
             } catch (e: Exception) {
                 _errorMessage.value = "Error: ${e.message}"

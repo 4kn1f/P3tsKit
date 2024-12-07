@@ -37,7 +37,7 @@ data class ModelScanResponse(
 }
 
 data class DiseaseInfo(
-	val causes: String?,
+	val causes: List<String> = emptyList(),
 	val description: String?,
 	val note: String?,
 	val symptoms: List<String> = emptyList(),
@@ -45,7 +45,7 @@ data class DiseaseInfo(
 	val source: List<String> = emptyList()
 ) : Parcelable {
 	constructor(parcel: Parcel) : this(
-		parcel.readString(),
+		parcel.createStringArrayList() ?: emptyList(),
 		parcel.readString(),
 		parcel.readString(),
 		parcel.createStringArrayList() ?: emptyList(),
@@ -54,7 +54,7 @@ data class DiseaseInfo(
 	)
 
 	override fun writeToParcel(parcel: Parcel, flags: Int) {
-		parcel.writeString(causes)
+		parcel.writeStringList(causes)
 		parcel.writeString(description)
 		parcel.writeString(note)
 		parcel.writeStringList(symptoms)

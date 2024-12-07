@@ -46,7 +46,11 @@ class AuthRepository private constructor(
                     Result.failure(Exception("Empty response"))
                 }
             }else{
-                Result.failure(Exception("Login failed ${response.message()}"))
+                when(response.code()){
+                    401 -> Result.failure(Exception("Wrong Password"))
+                    404 -> Result.failure(Exception("User not found"))
+                    else -> Result.failure(Exception("Login failed ${response.message()}"))
+                }
             }
         }catch (e: Exception){
             Result.failure(e)
@@ -76,6 +80,7 @@ class AuthRepository private constructor(
         ): AuthRepository =
             instance?: synchronized(this){
                 instance?: AuthRepository(authPreferences, apiService)
-            }.also { instance = it }
+            }.also {
+                instance = it }
     }
 }

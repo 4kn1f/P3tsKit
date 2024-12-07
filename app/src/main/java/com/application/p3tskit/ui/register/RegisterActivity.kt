@@ -9,6 +9,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.application.p3tskit.MainActivity
+import com.application.p3tskit.data.pref.AuthPreferences
+import com.application.p3tskit.data.pref.dataStore
 import com.application.p3tskit.databinding.ActivityRegisterBinding
 import com.application.p3tskit.ui.ViewModelFactory
 import com.application.p3tskit.ui.login.LoginActivity
@@ -25,6 +28,16 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        lifecycleScope.launch {
+            AuthPreferences.getInstance(applicationContext).getSession().collect { user ->
+                if (user.isLogin && user.token.isNotEmpty()) {
+                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
 
         setupRegister()
         observeViewModel()

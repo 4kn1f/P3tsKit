@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/scan_result"
+            android:text="Scan Result"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
@@ -24,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/placeholder"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/placeholder" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -42,10 +41,10 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/tv_cause"
+                    android:id="@+id/tv_predicted_class"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/causes"
+                    android:text="Diagnosis:"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
@@ -54,45 +53,40 @@
                     android:id="@+id/tv_result_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/description"
+                    android:text="Description"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/symptoms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/symptoms"
+                    android:text="Symptoms"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/tv_treatment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/treatment"
+                    android:text="Treatment"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/tv_note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/note"
+                    android:text="Note"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/tv_source"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/source"
+                    android:text="Source"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
             </LinearLayout>

@@ -3,16 +3,23 @@ package com.application.p3tskit.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.application.p3tskit.MainActivity
+import com.application.p3tskit.data.pref.AuthModel
+import com.application.p3tskit.data.pref.AuthPreferences
 import com.application.p3tskit.databinding.ActivityLoginBinding
 import com.application.p3tskit.ui.ViewModelFactory
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var authPreferences: AuthPreferences
     private val loginViewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(this)
     }
@@ -22,13 +29,25 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        authPreferences = AuthPreferences.getInstance(this)
+
         setupLogin()
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        loginViewModel.loginResponse.observe(this){ loginResult ->
+        loginViewModel.loginResponse.observe(this) { loginResult ->
             if (loginResult != null) {
+                val userModel = AuthModel(
+                    email = binding.emailEditText.text.toString(),
+                    token = loginResult.token ?: "",
+                    isLogin = true
+                )
+
+                lifecycleScope.launch {
+                    authPreferences.saveSession(userModel)
+                }
+
                 showSuccess("Login successful!")
             }
         }
@@ -38,8 +57,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.errorMessage.observe(this) { errorMessage ->
-            if (errorMessage.isNotEmpty()) {
-                showError(errorMessage)
+            when{
+                errorMessage.contains("Email") -> binding.emailEditTextLayout.error = errorMessage
+                errorMessage.contains("Password") -> binding.passwordEditTextLayout.error = errorMessage
+                errorMessage.isNotEmpty() -> showError("Login Failed")
             }
         }
     }
@@ -53,9 +74,12 @@ class LoginActivity : AppCompatActivity() {
                 if (email.isNotEmpty() && password.isNotEmpty()) {
                     loginViewModel.login(email, password)
                 } else {
-                    showError("Email and password cannot be empty!, fill in first")
+                    showError("Please fill in all field first")
                 }
             }
+
+            setFormFocus(emailEditText, emailEditTextLayout)
+            setFormFocus(passwordEditText, passwordEditTextLayout)
         }
     }
 
@@ -70,4 +94,11 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun setFormFocus(edt: EditText, layout: TextInputLayout){
+        edt.setOnFocusChangeListener { _, focus ->
+            if (focus) {
+                layout.error = null
+            }
+        }
+    }
 }
