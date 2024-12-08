@@ -27,11 +27,11 @@
     <string name="camera">Camera</string>
     <string name="camera_preview">Camera Preview</string>
     <string name="cause">Cause:</string>
-    <string name="note">Note\n</string>
-    <string name="source">"Source: "</string>
-    <string name="treatment">Treatment:\n</string>
-    <string name="symptoms">Symptoms:\n</string>
-    <string name="description">Description:\n</string>
+    <string name="note">Note:</string>
+    <string name="source">"Source:"</string>
+    <string name="treatment">Treatment:</string>
+    <string name="symptoms">Symptoms:</string>
+    <string name="description">Description:</string>
     <string name="causes">"Causes: "</string>
     <string name="scan_result">Scan Result</string>
     <string name="description_not_available">Description: Not Available</string>
@@ -39,10 +39,11 @@
     <string name="treatment_not_available">Treatment: Not Available</string>
     <string name="note_not_available">Note: Not Available</string>
     <string name="source_not_available">Source: Not Available</string>
-    <string name="diagnosis">Diagnosis: %1$s</string>
-    <string name="descriptions">Descriptions: %1$s</string>
+    <string name="diagnosis">%1$s</string>
+    <string name="descriptions">%1$s</string>
     <string name="about_us">About us</string>
     <string name="profile_picture">Logo image</string>
     <string name="dark_mode">Dark mode</string>
     <string name="logout">Logout</string>
+    <string name="diagnose">Diagnosis Prediction:</string>
 </resources>
