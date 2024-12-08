@@ -2,8 +2,9 @@
 <resources>
     <color name="sky_blue">#82C1E6</color>
     <color name="blue">#A7CDE7</color>
-    <color name="light_blue">#D0E2EF</color>
+    <color name="light_blue">#DEEAF6</color>
     <color name="peach">#F8CDD7</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_pink">#FEF7FF</color>
 </resources>
