@@ -4,8 +4,10 @@
     <color name="blue">#A7CDE7</color>
     <color name="light_blue">#DEEAF6</color>
     <color name="peach">#F8CDD7</color>
+    <color name="dark_peach">#E7A7B2</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_pink">#FEF7FF</color>
     <color name="yellow">#FFE6D1</color>
+    <color name="navy">#157DA8</color>
 </resources>

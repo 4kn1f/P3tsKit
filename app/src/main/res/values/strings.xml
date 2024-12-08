@@ -46,4 +46,6 @@
     <string name="dark_mode">Dark mode</string>
     <string name="logout">Logout</string>
     <string name="diagnose">Diagnosis Prediction:</string>
+    <string name="see_more">See more</string>
+    <string name="gallery">Album</string>
 </resources>
