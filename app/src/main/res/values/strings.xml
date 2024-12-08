@@ -41,4 +41,8 @@
     <string name="source_not_available">Source: Not Available</string>
     <string name="diagnosis">Diagnosis: %1$s</string>
     <string name="descriptions">Descriptions: %1$s</string>
+    <string name="about_us">About us</string>
+    <string name="profile_picture">Logo image</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="logout">Logout</string>
 </resources>

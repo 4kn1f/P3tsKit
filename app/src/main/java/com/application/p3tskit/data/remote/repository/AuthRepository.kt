@@ -14,10 +14,6 @@ class AuthRepository private constructor(
     private val apiService: ApiService
 ) {
 
-    /**
-     * Handles user registration by sending a request to the API.
-     * Returns a [Result] indicating success or failure.
-     */
     suspend fun register(name: String, email: String, password: String): Result<RegisterResponse> {
         return try {
             val request = RegisterRequest(name, email, password)
@@ -32,10 +28,6 @@ class AuthRepository private constructor(
         }
     }
 
-    /**
-     * Handles user login by sending a request to the API.
-     * Returns a [Result] indicating success or failure.
-     */
     suspend fun login(email: String, password: String): Result<LoginResponse> {
         return try {
             val request = LoginRequest(email, password)
@@ -55,23 +47,14 @@ class AuthRepository private constructor(
         }
     }
 
-    /**
-     * Saves the user's session to shared preferences.
-     */
     suspend fun saveSession(user: AuthModel) {
         authPreferences.saveSession(user)
     }
 
-    /**
-     * Retrieves the current session as a Flow.
-     */
     fun getSession(): Flow<AuthModel> {
         return authPreferences.getSession()
     }
 
-    /**
-     * Logs out the user by clearing their session.
-     */
     suspend fun logout() {
         authPreferences.logout()
     }
@@ -80,10 +63,6 @@ class AuthRepository private constructor(
         @Volatile
         private var instance: AuthRepository? = null
 
-        /**
-         * Provides a singleton instance of [AuthRepository].
-         * Requires [AuthPreferences] and [ApiService] as dependencies.
-         */
         fun getInstance(
             authPreferences: AuthPreferences,
             apiService: ApiService
