@@ -9,7 +9,13 @@
         android:id="@+id/navigation_home"
         android:name="com.application.p3tskit.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_history"
+            app:destination="@id/navigation_history" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_scan"
@@ -28,4 +34,10 @@
         android:name="com.application.p3tskit.ui.scan.DetailScanFragment"
         android:label="@string/Scan"
         tools:layout="@layout/fragment_detail_scan_page" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.application.p3tskit.ui.history.HistoryFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_history" />
 </navigation>

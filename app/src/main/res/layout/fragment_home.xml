@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_home"
     tools:context=".ui.home.HomeFragment">
 
     <ScrollView
@@ -130,7 +131,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            android:contentDescription="@string/content_cat"/>
+                            android:contentDescription="@string/content_cat"
+                            />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
