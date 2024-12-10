@@ -8,13 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.application.p3tskit.data.pref.AuthModel
 import com.application.p3tskit.data.remote.repository.AuthRepository
 import com.application.p3tskit.data.remote.retrofit.ApiConfig
+import com.application.p3tskit.remote.repository.NewsRepository
 import com.application.p3tskit.remote.response.ArticlesItem
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val authRepository: AuthRepository): ViewModel() {
+class HomeViewModel(private val authRepository: AuthRepository, private val newsRepository: NewsRepository): ViewModel() {
 
-    private val _newsList = MutableLiveData<List<ArticlesItem>>()
-    val newsList: LiveData<List<ArticlesItem>> get() = _newsList
+    private val _newsList = MutableLiveData<List<ArticlesItem?>>()
+    val newsList: LiveData<List<ArticlesItem?>> get() = _newsList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -27,21 +28,15 @@ class HomeViewModel(private val authRepository: AuthRepository): ViewModel() {
     }
 
     private fun getNews() {
-        _isLoading.value = true
         viewModelScope.launch {
-            try {
-                val response = ApiConfig.getNewsService().getCancerNews()
-                if (response.isSuccessful) {
-                    _newsList.value = (response.body()?.articles?.take(4)?: emptyList()) as List<ArticlesItem>?
-                    _errorMessage.value = null
-                } else {
-                    _errorMessage.value = "Failed to load news"
-                }
-            } catch (e: Exception) {
-                _errorMessage.value = "An error occurred: ${e.message}"
-            } finally {
-                _isLoading.value = false
+            _isLoading.value = true
+            val result = newsRepository.getAllNews()
+            result.onSuccess { newsResponse ->
+                _newsList.value = newsResponse.articles?.take(4)
+            }.onFailure { exception ->
+                _errorMessage.value = "Error: ${exception.message}"
             }
+            _isLoading.value = false
         }
     }
 

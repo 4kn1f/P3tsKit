@@ -18,7 +18,7 @@ class NewsAdapter(private val newsList: List<ArticlesItem?>) :
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        val news = newsList[position]
+        val news = newsList.getOrNull(position)
         news?.let { holder.bind(it) }
     }
 
