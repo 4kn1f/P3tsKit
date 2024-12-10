@@ -6,13 +6,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.application.p3tskit.data.di.Injection
 import com.application.p3tskit.data.remote.repository.AuthRepository
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
+import com.application.p3tskit.remote.repository.NewsRepository
 import com.application.p3tskit.ui.history.HistoryViewModel
 import com.application.p3tskit.ui.home.HomeViewModel
 import com.application.p3tskit.ui.login.LoginViewModel
 import com.application.p3tskit.ui.profile.ProfileViewModel
 import com.application.p3tskit.ui.register.RegisterViewModel
 
-class ViewModelFactory(private val authRepository: AuthRepository, private val diagnoseRepository: DiagnoseRepository): ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val authRepository: AuthRepository, private val diagnoseRepository: DiagnoseRepository, private val newsRepository: NewsRepository): ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -24,13 +25,16 @@ class ViewModelFactory(private val authRepository: AuthRepository, private val d
                 LoginViewModel(authRepository) as T
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) ->{
-                HomeViewModel(authRepository) as T
+                HomeViewModel(authRepository, newsRepository) as T
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) ->{
                 ProfileViewModel(authRepository) as T
             }
             modelClass.isAssignableFrom(HistoryViewModel::class.java) ->{
                 HistoryViewModel(diagnoseRepository) as T
+            }
+            modelClass.isAssignableFrom(NewsViewModel::class.java) ->{
+                NewsViewModel(newsRepository, authRepository) as T
             }
             else -> throw IllegalArgumentException("Error")
         }
@@ -45,7 +49,8 @@ class ViewModelFactory(private val authRepository: AuthRepository, private val d
             return INSTANCE ?: synchronized(this){
                 INSTANCE?: ViewModelFactory(
                     Injection.provideAuthRepository(context),
-                    Injection.provideDiagnoseRepository(context)
+                    Injection.provideDiagnoseRepository(context),
+                    Injection.provideNewsRepository()
                 ).also { INSTANCE = it }
             }
         }

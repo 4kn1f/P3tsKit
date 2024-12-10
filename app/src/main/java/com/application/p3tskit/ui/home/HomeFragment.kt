@@ -1,5 +1,6 @@
 package com.application.p3tskit.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.p3tskit.R
 import com.application.p3tskit.databinding.FragmentHomeBinding
+import com.application.p3tskit.ui.NewsActivity
 import com.application.p3tskit.ui.NewsAdapter
 import com.application.p3tskit.ui.ViewModelFactory
 
@@ -29,6 +31,12 @@ class HomeFragment : Fragment() {
 
         binding.cardCat.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_navigation_history)
+        }
+
+        binding.tvSeeMoreNews.setOnClickListener{
+            val intent = Intent(requireContext(), NewsActivity::class.java)
+            intent.putExtra("EXTRA_NEWS_COUNT", 30)
+            startActivity(intent)
         }
 
         homeViewModel.getSession().observe(viewLifecycleOwner) { user ->
