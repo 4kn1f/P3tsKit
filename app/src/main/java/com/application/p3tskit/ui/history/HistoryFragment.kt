@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.p3tskit.databinding.FragmentHistoryBinding
-import com.application.p3tskit.ui.HistoryAdapter
+import com.application.p3tskit.ui.adapter.HistoryAdapter
 import com.application.p3tskit.ui.ViewModelFactory
 import android.util.Log
 

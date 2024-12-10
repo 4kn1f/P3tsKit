@@ -1,4 +1,4 @@
-package com.application.p3tskit.ui
+package com.application.p3tskit.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

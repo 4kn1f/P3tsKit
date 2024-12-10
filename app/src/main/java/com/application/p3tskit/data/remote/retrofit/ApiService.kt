@@ -1,11 +1,13 @@
 package com.application.p3tskit.data.remote.retrofit
 
+import com.application.p3tskit.BuildConfig
 import com.application.p3tskit.data.remote.response.HistoryResponses
 import com.application.p3tskit.data.remote.response.ModelScanResponse
 import com.application.p3tskit.data.remote.response.LoginRequest
 import com.application.p3tskit.data.remote.response.LoginResponse
 import com.application.p3tskit.data.remote.response.RegisterRequest
 import com.application.p3tskit.data.remote.response.RegisterResponse
+import com.application.p3tskit.remote.response.NewsResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -14,6 +16,7 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -38,4 +41,11 @@ interface ApiService {
     suspend fun getHistory(
         @Header ("Authorization") token: String?
     ): Response<HistoryResponses>
+
+    @GET("everything")
+    suspend fun getCancerNews(
+        @Query("q") query: String = "veterinary",
+        @Query("language") language: String = "en",
+        @Query("apiKey") apiKey: String = BuildConfig.NEWS_API_TOKEN
+    ): Response<NewsResponse>
 }
