@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions -->
     <uses-feature
         android:name="android.hardware.camera"
@@ -9,8 +8,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" android:minSdkVersion="33" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:minSdkVersion="33" />
 
     <application
         android:allowBackup="true"
@@ -22,28 +25,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.P3tsKit"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ui.newsletter.NewsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
         <activity
             android:name=".ui.scan.ScanFragment"
             android:exported="true" />
-
     </application>
 
 </manifest>
