@@ -21,22 +21,19 @@ class HistoryViewModel(private val repository: DiagnoseRepository) : ViewModel()
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    /**
-     * Fetches history data from the repository and updates the LiveData objects.
-     */
     fun getHistory() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                // Fetch history data from the repository
+
                 val historyItems = repository.getHistory()
                 Log.d("HistoryViewModel", "Raw API Response: $historyItems")
 
-                // Safely map diseaseInfo to DiseasesInfo type
+
                 val updatedHistoryItems = historyItems
                     .mapNotNull { historyItem ->
                         try {
-                            // Ensure that the diseaseInfo is of type DiseasesInfo
+
                             historyItem?.copy(diseaseInfo = historyItem.diseaseInfo as? DiseasesInfo)
                         } catch (e: Exception) {
                             Log.e("HistoryViewModel", "Error casting diseaseInfo: ", e)
@@ -48,11 +45,11 @@ class HistoryViewModel(private val repository: DiagnoseRepository) : ViewModel()
                 _historyResult.value = updatedHistoryItems
 
             } catch (e: Exception) {
-                // Handle and log exceptions
+
                 _errorMessage.value = "Failed to load history: ${e.message ?: "Unknown error"}"
                 Log.e("HistoryViewModel", "Error loading history: ", e)
             } finally {
-                // Hide loading indicator
+
                 _isLoading.value = false
             }
         }

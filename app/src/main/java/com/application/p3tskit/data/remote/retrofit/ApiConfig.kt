@@ -21,7 +21,7 @@ class ApiConfig {
                 .build()
 
             val gson = GsonBuilder()
-                // Ensure gson handles the response correctly without the need for custom deserializers.
+                .registerTypeAdapter(List::class.java, CausesDeserializer())
                 .create()
 
             val retrofit = Retrofit.Builder()
@@ -50,7 +50,4 @@ class ApiConfig {
             return retrofit.create(ApiService::class.java)
         }
     }
-
 }
-
-
