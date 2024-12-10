@@ -23,15 +23,16 @@ class HistoryAdapter(private var itemHistory: List<HistoryItem>) : RecyclerView.
 
     inner class HistoryViewHolder(private val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(historyItem: HistoryItem) {
-
+            // Safely cast `diseaseInfo` and handle null values gracefully
             val diseasesInfo = historyItem.diseaseInfo as? DiseasesInfo
 
-            binding.tvPredictedClass.text = historyItem.predictedClass
-            binding.tvResultDescription.text = diseasesInfo?.description
-            binding.symptoms.text = diseasesInfo?.symptoms?.joinToString(", ")
-            binding.tvTreatment.text = diseasesInfo?.treatment?.joinToString(", ")
-            binding.tvNote.text = diseasesInfo?.note
-            binding.tvSource.text = diseasesInfo?.source?.joinToString(", ")
+            // Set default fallback values for TextViews in case of null data
+            binding.tvPredictedClass.text = historyItem.predictedClass ?: "N/A"
+            binding.tvResultDescription.text = diseasesInfo?.description ?: "No description available"
+            binding.symptoms.text = diseasesInfo?.symptoms?.joinToString(", ") ?: "No symptoms listed"
+            binding.tvTreatment.text = diseasesInfo?.treatment?.joinToString(", ") ?: "No treatment information"
+            binding.tvNote.text = diseasesInfo?.note ?: "No additional notes"
+            binding.tvSource.text = diseasesInfo?.source?.joinToString(", ") ?: "No source provided"
         }
     }
 

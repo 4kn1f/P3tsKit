@@ -1,9 +1,6 @@
 package com.application.p3tskit.data.remote.repository
 
 import android.content.Context
-import android.graphics.pdf.models.ListItem
-import android.net.Uri
-import android.provider.MediaStore
 import com.application.p3tskit.data.pref.AuthPreferences
 import com.application.p3tskit.data.remote.response.HistoryItem
 import com.application.p3tskit.data.remote.response.ModelScanResponse
@@ -12,6 +9,7 @@ import com.application.p3tskit.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.firstOrNull
 import okhttp3.MultipartBody
 import retrofit2.Response
+import android.util.Log
 
 class DiagnoseRepository private constructor(
     private val apiService: ApiService,
@@ -20,16 +18,33 @@ class DiagnoseRepository private constructor(
 ) {
 
     suspend fun diagnoseImage(authToken: String, imagePart: MultipartBody.Part): Response<ModelScanResponse>? {
-        return apiService.getDiagnosed(authToken, imagePart)
+        return try {
+            apiService.getDiagnosed(authToken, imagePart)
+        } catch (e: Exception) {
+            Log.e("DiagnoseRepository", "Error diagnosing image: ${e.message}", e)
+            null
+        }
     }
 
     suspend fun getHistory(): List<HistoryItem?> {
         val token = authPreferences.getSession().firstOrNull()?.token
-        val remote = apiService.getHistory("Bearer $token")
-        return if (remote.isSuccessful) {
-            remote.body()?.history?.filterNotNull() ?: emptyList()
-        } else {
-            throw Exception("Failed to fetch history from the API")
+        if (token.isNullOrEmpty()) {
+            throw Exception("No valid token found in preferences")
+        }
+
+        return try {
+            val response = apiService.getHistory("Bearer $token")
+            if (response.isSuccessful) {
+                val historyList = response.body()?.history?.filterNotNull()
+                Log.d("DiagnoseRepository", "History fetched successfully: $historyList")
+                historyList ?: emptyList()
+            } else {
+                Log.e("DiagnoseRepository", "Failed to fetch history: ${response.errorBody()?.string()}")
+                throw Exception("Failed to fetch history: HTTP ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("DiagnoseRepository", "Error fetching history: ${e.message}", e)
+            throw e
         }
     }
 
@@ -48,4 +63,3 @@ class DiagnoseRepository private constructor(
         }
     }
 }
-

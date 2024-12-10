@@ -15,7 +15,7 @@ data class DiseasesInfo(
 
 data class HistoryItem(
 	val createdAt: Long? = null,
-	val diseaseInfo: Any? = null,
+	val diseaseInfo: DiseasesInfo? = null,
 	val userId: String? = null,
 	val predictedClass: String? = null
 )

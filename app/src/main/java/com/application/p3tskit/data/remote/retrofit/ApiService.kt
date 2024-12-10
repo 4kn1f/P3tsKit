@@ -39,7 +39,7 @@ interface ApiService {
 
     @GET ("history")
     suspend fun getHistory(
-        @Header ("Authorization") token: String?
+        @Header ("Authorization") token: String?,
     ): Response<HistoryResponses>
 
     @GET("everything")
