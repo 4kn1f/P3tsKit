@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">P3tsKit</string>
     <string name="title_home">Home</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Scan">Scan</string>
     <string name="profile">Profile</string>
@@ -59,4 +58,15 @@
     <string name="password_error">Password must be at least 5 chars</string>
     <string name="password_hint">Enter your password</string>
     <string name="language">Language</string>
+    <string name="p3tskit_desc">P3tsKit Application is an application developed by the C242-PS104 team to assist pet owners, especially those with dogs and cats, in identifying skin issues such as infections or wounds. By simply taking or uploading a photo, users can detect potential problems quickly and accurately. The application utilizes machine learning and cloud computing to process images efficiently, ensuring reliable results. It provides clear information about the detected issue and its treatment, enabling pet owners to take immediate action to care for their pets effectively.</string>
+    <string name="CC">Cloud Computing</string>
+    <string name="MD">Mobile Development</string>
+
+    <string-array name="spinner_items">
+        <item>P3tsKit Developer</item>
+        <item>Machine Learning</item>
+        <item>Cloud Computing</item>
+        <item>Mobile Development</item>
+    </string-array>
+
 </resources>

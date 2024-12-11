@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.about.AboutActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/img_about"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_p3tskit"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
+            android:elevation="4dp"
+            android:radius="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <TextView
+                android:id="@+id/tv_app_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/p3tskit_desc"
+                android:justificationMode="inter_word"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:padding="16dp" />
+        </androidx.cardview.widget.CardView>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp" />
+
+        <Spinner
+            android:id="@+id/spinner_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_margin="20dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:padding="8dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+    </LinearLayout>
+</ScrollView>
