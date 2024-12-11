@@ -29,16 +29,6 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        lifecycleScope.launch {
-            AuthPreferences.getInstance(applicationContext).getSession().collect { user ->
-                if (user.isLogin && user.token.isNotEmpty()) {
-                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        }
-
         setupRegister()
         observeViewModel()
     }
@@ -79,8 +69,10 @@ class RegisterActivity : AppCompatActivity() {
                 val email = emailEditText.text.toString().trim()
                 val password = passwordEditText.text.toString().trim()
 
-                if(name.isEmpty() || email.isEmpty() || password.isEmpty()){
-                   Toast.makeText(this@RegisterActivity, "Please fill in all field first", Toast.LENGTH_SHORT).show()
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(this@RegisterActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(this@RegisterActivity, "Please enter a valid email address", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d("RegisterActivity", "Name: $name, Email: $email, Password: $password")
                     lifecycleScope.launch {

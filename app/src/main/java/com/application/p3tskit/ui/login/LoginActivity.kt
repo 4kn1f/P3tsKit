@@ -15,6 +15,7 @@ import com.application.p3tskit.databinding.ActivityLoginBinding
 import com.application.p3tskit.ui.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
+import android.util.Patterns
 
 class LoginActivity : AppCompatActivity() {
 
@@ -57,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.errorMessage.observe(this) { errorMessage ->
-            when{
+            when {
                 errorMessage.contains("Email") -> binding.emailEditTextLayout.error = errorMessage
                 errorMessage.contains("Password") -> binding.passwordEditTextLayout.error = errorMessage
                 errorMessage.isNotEmpty() -> showError("Login Failed")
@@ -66,15 +67,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupLogin() {
-        binding.apply{
-            loginButton.setOnClickListener{
+        binding.apply {
+            loginButton.setOnClickListener {
                 val email = emailEditText.text.toString().trim()
                 val password = passwordEditText.text.toString().trim()
 
                 if (email.isNotEmpty() && password.isNotEmpty()) {
-                    loginViewModel.login(email, password)
+                    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        emailEditTextLayout.error = "Please enter a valid email address"
+                    } else {
+                        loginViewModel.login(email, password)
+                    }
                 } else {
-                    showError("Please fill in all field first")
+                    showError("Please fill in all fields")
                 }
             }
 
@@ -94,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun setFormFocus(edt: EditText, layout: TextInputLayout){
+    private fun setFormFocus(edt: EditText, layout: TextInputLayout) {
         edt.setOnFocusChangeListener { _, focus ->
             if (focus) {
                 layout.error = null
