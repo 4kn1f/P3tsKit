@@ -27,11 +27,14 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         observeViewModel()
         setupLogoutButton()
+
+        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            profileViewModel.saveThemeSetting(isChecked)
+        }
 
         return binding.root
     }
@@ -62,6 +65,10 @@ class ProfileFragment : Fragment() {
                 startActivity(intent)
                 requireActivity().finish()
             }
+        }
+
+        profileViewModel.themeSetting.observe(viewLifecycleOwner) { isDarkModeActive ->
+            binding.switchDarkMode.isChecked = isDarkModeActive
         }
     }
 }

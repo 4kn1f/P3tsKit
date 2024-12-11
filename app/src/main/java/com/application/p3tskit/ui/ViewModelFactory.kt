@@ -4,16 +4,18 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.application.p3tskit.data.di.Injection
+import com.application.p3tskit.data.pref.dataStore
 import com.application.p3tskit.data.remote.repository.AuthRepository
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
 import com.application.p3tskit.remote.repository.NewsRepository
 import com.application.p3tskit.ui.history.HistoryViewModel
 import com.application.p3tskit.ui.home.HomeViewModel
 import com.application.p3tskit.ui.login.LoginViewModel
+import com.application.p3tskit.ui.profile.ProfilePreferences
 import com.application.p3tskit.ui.profile.ProfileViewModel
 import com.application.p3tskit.ui.register.RegisterViewModel
 
-class ViewModelFactory(private val authRepository: AuthRepository, private val diagnoseRepository: DiagnoseRepository, private val newsRepository: NewsRepository): ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val authRepository: AuthRepository, private val diagnoseRepository: DiagnoseRepository, private val newsRepository: NewsRepository, private val profilePreferences: ProfilePreferences): ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -28,7 +30,7 @@ class ViewModelFactory(private val authRepository: AuthRepository, private val d
                 HomeViewModel(authRepository, newsRepository) as T
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) ->{
-                ProfileViewModel(authRepository) as T
+                ProfileViewModel(authRepository, profilePreferences) as T
             }
             modelClass.isAssignableFrom(HistoryViewModel::class.java) ->{
                 HistoryViewModel(diagnoseRepository) as T
@@ -50,7 +52,8 @@ class ViewModelFactory(private val authRepository: AuthRepository, private val d
                 INSTANCE?: ViewModelFactory(
                     Injection.provideAuthRepository(context),
                     Injection.provideDiagnoseRepository(context),
-                    Injection.provideNewsRepository()
+                    Injection.provideNewsRepository(),
+                    ProfilePreferences.getInstance(context.dataStore)
                 ).also { INSTANCE = it }
             }
         }
