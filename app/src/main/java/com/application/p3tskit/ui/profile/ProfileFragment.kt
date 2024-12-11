@@ -2,6 +2,7 @@ package com.application.p3tskit.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,12 +32,19 @@ class ProfileFragment : Fragment() {
 
         observeViewModel()
         setupLogoutButton()
+        setupAction()
 
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             profileViewModel.saveThemeSetting(isChecked)
         }
 
         return binding.root
+    }
+
+    private fun setupAction() {
+        binding.switchLanguage.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
     }
 
     private fun setupLogoutButton() {

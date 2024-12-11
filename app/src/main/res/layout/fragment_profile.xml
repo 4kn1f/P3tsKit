@@ -66,6 +66,48 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/ll_languange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="12dp"
+        android:background="?attr/colorSurface"
+        app:layout_constraintTop_toBottomOf="@id/ll_dark_mode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_baseline_language_24"
+            android:textColor="?attr/colorOnBackground"
+            android:contentDescription="@string/about_us" />
+
+        <TextView
+            android:id="@+id/tv_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/language"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginStart="16dp" />
+
+        <ImageView
+            android:id="@+id/switch_language"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="?attr/colorOnBackground"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:contentDescription="@string/language" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_about"
         android:layout_width="match_parent"
@@ -73,7 +115,7 @@
         android:orientation="horizontal"
         android:paddingVertical="12dp"
         android:background="?attr/colorSurface"
-        app:layout_constraintTop_toBottomOf="@id/ll_dark_mode"
+        app:layout_constraintTop_toBottomOf="@id/ll_languange"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
@@ -128,7 +170,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textSize="16sp"
             android:textColor="?attr/colorOnBackground"
             android:layout_marginStart="16dp" />

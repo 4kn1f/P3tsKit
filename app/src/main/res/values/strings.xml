@@ -52,10 +52,11 @@
     <string name="title_news">News title</string>
     <string name="logo">Logo P3tsKit</string>
     <string name="with_love">Made with ❤️ by C242-PS104</string>
-    <string name="short_desc">Your favorite tool for effortless \ncat and dog disease detection</string>
+    <string name="short_desc">Your personal App for effortless \n\tcat and dog disease detection</string>
     <string name="welcome">Welcome to the</string>
     <string name="email_error">Invalid email address</string>
     <string name="email_hint">xxx@gmail.com</string>
     <string name="password_error">Password must be at least 5 chars</string>
     <string name="password_hint">Enter your password</string>
+    <string name="language">Language</string>
 </resources>
