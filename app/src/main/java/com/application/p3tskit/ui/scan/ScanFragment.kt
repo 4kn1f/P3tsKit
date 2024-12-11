@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,6 +34,8 @@ class ScanFragment : Fragment() {
     private lateinit var btnCamera: Button
     private lateinit var btnScan: Button
     private lateinit var imageView: ImageView
+    private lateinit var howToUseText: TextView
+    private lateinit var progressBar: ProgressBar
     private var capturedImageUri: Uri? = null
 
     private lateinit var pickImageLauncher: ActivityResultLauncher<String>
@@ -47,9 +51,7 @@ class ScanFragment : Fragment() {
         authPreferences = AuthPreferences.getInstance(requireActivity().applicationContext)
 
         val diagnoseRepository = DiagnoseRepository.getInstance(requireContext())
-
         val factory = DetailScanViewModelFactory(diagnoseRepository, authPreferences, requireActivity().application)
-
         viewModel = ViewModelProvider(this, factory).get(DetailScanViewModel::class.java)
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -77,6 +79,8 @@ class ScanFragment : Fragment() {
         btnCamera = view.findViewById(R.id.buttonCamera)
         btnScan = view.findViewById(R.id.buttonScan)
         imageView = view.findViewById(R.id.scanImage)
+        howToUseText = view.findViewById(R.id.howToUseText)
+        progressBar = view.findViewById(R.id.progressBar)
 
         btnCamera.setOnClickListener { checkCameraPermission() }
         btnGallery.setOnClickListener { pickImageFromGallery() }
@@ -120,12 +124,14 @@ class ScanFragment : Fragment() {
     private fun uploadImage() {
         capturedImageUri?.let { uri ->
             showToast("Uploading image...")
+            toggleProgressBar(true)
 
             lifecycleScope.launch {
                 try {
                     viewModel.analyzeImage(uri)
 
                     viewModel.scanResult.observe(viewLifecycleOwner) { scanResponse ->
+                        toggleProgressBar(false)
                         scanResponse?.let { response ->
                             Log.d("ScanResult", "Received scan result: $response")
 
@@ -155,16 +161,22 @@ class ScanFragment : Fragment() {
                     }
 
                     viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                        toggleProgressBar(false)
                         errorMessage?.let {
                             showToast(it)
                         }
                     }
 
                 } catch (e: Exception) {
+                    toggleProgressBar(false)
                     showToast("Error: ${e.message}")
                 }
             }
         } ?: showToast("No image selected.")
+    }
+
+    private fun toggleProgressBar(show: Boolean) {
+        progressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: String) {
