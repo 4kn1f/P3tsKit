@@ -16,6 +16,7 @@ import com.application.p3tskit.data.pref.AuthPreferences
 import com.application.p3tskit.data.pref.dataStore
 import com.application.p3tskit.databinding.FragmentProfileBinding
 import com.application.p3tskit.ui.ViewModelFactory
+import com.application.p3tskit.ui.about.AboutActivity
 import com.application.p3tskit.ui.register.RegisterActivity
 import com.application.p3tskit.ui.splash.SplashActivity
 import kotlinx.coroutines.launch
@@ -44,6 +45,10 @@ class ProfileFragment : Fragment() {
     private fun setupAction() {
         binding.switchLanguage.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
+        binding.moveAbout.setOnClickListener{
+            val intent = Intent(requireActivity(), AboutActivity::class.java)
+            startActivity(intent)
         }
     }
 
