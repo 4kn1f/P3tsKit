@@ -21,7 +21,7 @@ class AuthRepository private constructor(
             if (response.isSuccessful) {
                 response.body()?.let { Result.success(it) } ?: Result.failure(Exception("Empty response"))
             } else {
-                Result.failure(Exception("Registration failed: ${response.message()}"))
+                Result.failure(Exception("Account already exists"))
             }
         } catch (e: Exception) {
             Result.failure(e)

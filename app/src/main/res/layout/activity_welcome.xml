@@ -4,6 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.welcome.WelcomeActivity">
 
     <TextView
@@ -38,12 +39,12 @@
         android:id="@+id/img_logo"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_welcome_to"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo_p3tskit" />
 
     <TextView
         android:id="@+id/tv_desc"
@@ -73,7 +74,6 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="@color/black"
             android:elevation="5dp"
             android:textSize="17sp"
             android:backgroundTint="@color/peach"
@@ -87,7 +87,6 @@
             android:text="@string/register"
             android:textSize="17sp"
             android:elevation="5dp"
-            android:textColor="@color/black"
             android:backgroundTint="@color/blue"
             app:cornerRadius="4dp"
             android:layout_marginStart="10dp"/>

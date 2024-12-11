@@ -41,7 +41,9 @@ class HomeFragment : Fragment() {
 
         homeViewModel.getSession().observe(viewLifecycleOwner) { user ->
             user?.let {
-                binding.tvUser.text = it.email
+                val email = it.email
+                val shortEmail = email.split("@").getOrNull(0)
+                binding.tvUser.text = shortEmail
             }
         }
 

@@ -16,6 +16,7 @@ import com.application.p3tskit.data.pref.dataStore
 import com.application.p3tskit.databinding.FragmentProfileBinding
 import com.application.p3tskit.ui.ViewModelFactory
 import com.application.p3tskit.ui.register.RegisterActivity
+import com.application.p3tskit.ui.splash.SplashActivity
 import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
@@ -47,14 +48,16 @@ class ProfileFragment : Fragment() {
     private fun observeViewModel() {
         profileViewModel.getSession().observe(viewLifecycleOwner) { user ->
             user?.let {
-                binding.tvUserName.text = it.email
+                val email = it.email
+                val shortEmail = email.split("@").getOrNull(0)
+                binding.tvUserName.text = shortEmail
             }
         }
 
         profileViewModel.logout.observe(viewLifecycleOwner) { isLoggedOut ->
             if (isLoggedOut) {
                 Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
-                val intent = Intent(requireContext(), RegisterActivity::class.java)
+                val intent = Intent(requireContext(), SplashActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 requireActivity().finish()
