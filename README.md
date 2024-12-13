@@ -23,7 +23,7 @@
 
 ---
 
-### Description
+### P3TSKIT Description
 
 **P3tsKit Application** is an application developed by the **C242-PS104 team** to assist pet owners, especially those with dogs and cats, in identifying skin issues such as infections or wounds. By simply taking or uploading a photo, users can detect potential problems quickly and accurately.  
 
