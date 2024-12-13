@@ -10,10 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,19 +19,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.application.p3tskit.R
-import com.bumptech.glide.Glide
-import kotlinx.coroutines.launch
 import com.application.p3tskit.data.pref.AuthPreferences
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
+import com.application.p3tskit.databinding.FragmentScanBinding
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 
 class ScanFragment : Fragment() {
 
-    private lateinit var btnGallery: Button
-    private lateinit var btnCamera: Button
-    private lateinit var btnScan: Button
-    private lateinit var imageView: ImageView
-    private lateinit var howToUseText: TextView
-    private lateinit var progressBar: ProgressBar
+    private var _binding: FragmentScanBinding? = null
+    private val binding get() = _binding!!
+
     private var capturedImageUri: Uri? = null
 
     private lateinit var pickImageLauncher: ActivityResultLauncher<String>
@@ -72,21 +66,22 @@ class ScanFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_scan, container, false)
+    ): View {
+        _binding = FragmentScanBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        btnGallery = view.findViewById(R.id.buttonGallery)
-        btnCamera = view.findViewById(R.id.buttonCamera)
-        btnScan = view.findViewById(R.id.buttonScan)
-        imageView = view.findViewById(R.id.scanImage)
-        howToUseText = view.findViewById(R.id.howToUseText)
-        progressBar = view.findViewById(R.id.progressBar)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        btnCamera.setOnClickListener { checkCameraPermission() }
-        btnGallery.setOnClickListener { pickImageFromGallery() }
-        btnScan.setOnClickListener { uploadImage() }
+        binding.buttonCamera.setOnClickListener { checkCameraPermission() }
+        binding.buttonGallery.setOnClickListener { pickImageFromGallery() }
+        binding.buttonScan.setOnClickListener { uploadImage() }
+    }
 
-        return view
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun checkCameraPermission() {
@@ -118,7 +113,7 @@ class ScanFragment : Fragment() {
     private fun pickImageFromGallery() = pickImageLauncher.launch("image/*")
 
     private fun displayCapturedImage(uri: Uri) {
-        Glide.with(this).load(uri).into(imageView)
+        Glide.with(this).load(uri).into(binding.scanImage)
     }
 
     private fun uploadImage() {
@@ -176,7 +171,7 @@ class ScanFragment : Fragment() {
     }
 
     private fun toggleProgressBar(show: Boolean) {
-        progressBar.visibility = if (show) View.VISIBLE else View.GONE
+        binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: String) {

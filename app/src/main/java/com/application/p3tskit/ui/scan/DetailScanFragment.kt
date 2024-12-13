@@ -94,8 +94,16 @@ class DetailScanFragment : Fragment() {
 
             binding.tvNote.text = diseaseInfo.note ?: "Not Available"
 
-            val source = diseaseInfo.source.takeIf { it.isNotEmpty() }?.joinToString("\n") ?: "Not Available"
-            binding.tvSource.text = source
+            val source = diseaseInfo.source.takeIf { it.isNotEmpty() }?.joinToString("\n") { url ->
+                "<a href=\"$url\">$url</a>"
+            } ?: "Not Available"
+
+            binding.tvSource.text = if (source != "Not Available") {
+                android.text.Html.fromHtml(source, android.text.Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                "Source: Not Available"
+            }
+            binding.tvSource.movementMethod = android.text.method.LinkMovementMethod.getInstance()
 
         } ?: run {
             Log.e("DetailScanFragment", "Disease info is null, using default values")
@@ -107,4 +115,5 @@ class DetailScanFragment : Fragment() {
             binding.tvSource.text = "Source: ${getString(R.string.source_not_available)}"
         }
     }
+
 }

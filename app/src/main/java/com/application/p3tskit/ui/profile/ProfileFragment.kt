@@ -54,10 +54,20 @@ class ProfileFragment : Fragment() {
 
     private fun setupLogoutButton() {
         binding.llLogout.setOnClickListener {
-            lifecycleScope.launch {
-                profileViewModel.logout()
-                AuthPreferences.getInstance(requireContext()).logout()
-            }
+            val builder = android.app.AlertDialog.Builder(requireContext())
+            builder.setMessage("Are you sure you want to log out?")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { dialog, id ->
+                    lifecycleScope.launch {
+                        profileViewModel.logout()
+                        AuthPreferences.getInstance(requireContext()).logout()
+                    }
+                }
+                .setNegativeButton("No") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
         }
     }
 
@@ -67,6 +77,7 @@ class ProfileFragment : Fragment() {
                 val email = it.email
                 val shortEmail = email.split("@").getOrNull(0)
                 binding.tvUserName.text = shortEmail
+                binding.tvEmail.text = email
             }
         }
 

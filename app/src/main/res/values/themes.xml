@@ -9,6 +9,7 @@
         <!--text color-->
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:textColorSecondary">@color/black</item>
+<!--        <item name="android:fontFamily">@font/inter</item>-->
     </style>
 
     <style name="Theme.P3tsKit" parent="Base.Theme.P3tsKit" />

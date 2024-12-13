@@ -10,6 +10,7 @@ import com.application.p3tskit.data.remote.repository.AuthRepository
 import com.application.p3tskit.data.remote.retrofit.ApiConfig
 import com.application.p3tskit.remote.repository.NewsRepository
 import com.application.p3tskit.remote.response.ArticlesItem
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val authRepository: AuthRepository, private val newsRepository: NewsRepository): ViewModel() {
@@ -23,8 +24,12 @@ class HomeViewModel(private val authRepository: AuthRepository, private val news
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
 
+    private val _logout = MutableLiveData<Boolean>()
+    val logout: LiveData<Boolean> get() = _logout
+
     init {
         getNews()
+        checkSessionTimeout()
     }
 
     private fun getNews() {
@@ -42,5 +47,33 @@ class HomeViewModel(private val authRepository: AuthRepository, private val news
 
     fun getSession(): LiveData<AuthModel> {
         return authRepository.getSession().asLiveData()
+    }
+
+    fun checkSessionTimeout() {
+        viewModelScope.launch {
+            val session = authRepository.getSession().first()
+            val currentTime = System.currentTimeMillis()
+            val sessionAge = currentTime - session.loginTime
+
+            if (sessionAge > 3600000) {
+                logout()
+            }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            authRepository.logout()
+            _logout.postValue(true)
+        }
+    }
+
+    fun checkSession(): LiveData<Boolean> {
+        val isSessionValid = MutableLiveData<Boolean>()
+        viewModelScope.launch {
+            val session = authRepository.getSession().first()
+            isSessionValid.postValue(session.token.isNotEmpty())
+        }
+        return isSessionValid
     }
 }

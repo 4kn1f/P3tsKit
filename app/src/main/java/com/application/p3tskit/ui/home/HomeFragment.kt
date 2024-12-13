@@ -16,6 +16,8 @@ import com.application.p3tskit.databinding.FragmentHomeBinding
 import com.application.p3tskit.ui.NewsActivity
 import com.application.p3tskit.ui.NewsAdapter
 import com.application.p3tskit.ui.ViewModelFactory
+import com.application.p3tskit.ui.about.AboutActivity
+import com.application.p3tskit.ui.login.LoginActivity
 
 class HomeFragment : Fragment() {
 
@@ -33,9 +35,14 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_home_to_navigation_history)
         }
 
-        binding.tvSeeMoreNews.setOnClickListener{
+        binding.tvSeeMoreNews.setOnClickListener {
             val intent = Intent(requireContext(), NewsActivity::class.java)
             intent.putExtra("EXTRA_NEWS_COUNT", 30)
+            startActivity(intent)
+        }
+
+        binding.lyMove.setOnClickListener {
+            val intent = Intent(requireContext(), AboutActivity::class.java)
             startActivity(intent)
         }
 
@@ -75,5 +82,26 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
+
+        homeViewModel.checkSession().observe(viewLifecycleOwner) { isSessionValid ->
+            if (!isSessionValid) {
+                showSessionExpiredDialog()
+            }
+        }
+
+        homeViewModel.checkSessionTimeout()
+    }
+
+    private fun showSessionExpiredDialog() {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        builder.setTitle("Session Expired")
+        builder.setMessage("Your session has expired, login again")
+        builder.setPositiveButton("Login") { _, _ ->
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
+        builder.setCancelable(false)
+        builder.show()
     }
 }

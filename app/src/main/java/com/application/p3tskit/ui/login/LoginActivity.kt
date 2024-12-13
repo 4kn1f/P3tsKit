@@ -42,7 +42,8 @@ class LoginActivity : AppCompatActivity() {
                 val userModel = AuthModel(
                     email = binding.emailEditText.text.toString(),
                     token = loginResult.token ?: "",
-                    isLogin = true
+                    isLogin = true,
+                    loginTime = System.currentTimeMillis()
                 )
 
                 lifecycleScope.launch {

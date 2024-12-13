@@ -31,7 +31,7 @@ class LoginViewModel(private val authRepository: AuthRepository): ViewModel() {
                 if (loginResponse != null) {
                     _loginResult.value = loginResponse
                     loginResponse.token?.let { token ->
-                        saveSession(AuthModel(email = email, token = token, true))
+                        saveSession(AuthModel(email = email, token = token, true, loginTime = System.currentTimeMillis()))
                     } ?: run {
                         _errorMessage.value = "Token not found"
                     }

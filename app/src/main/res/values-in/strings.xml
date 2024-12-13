@@ -58,4 +58,25 @@
     <string name="password_error">Kata sandi harus minimal 5 karakter</string>
     <string name="password_hint">Masukkan kata sandi Anda</string>
     <string name="language">Bahasa</string>
+    <string name="p3tskit_desc">Aplikasi P3tsKit adalah aplikasi yang dikembangkan oleh tim C242-PS104 untuk membantu pemilik hewan peliharaan, khususnya anjing dan kucing, dalam mengidentifikasi masalah kulit seperti infeksi atau luka. Dengan hanya mengambil atau mengunggah foto, pengguna dapat mendeteksi potensi masalah dengan cepat dan akurat. Aplikasi ini menggunakan machine learning dan cloud computing untuk memproses gambar secara efisien, memastikan hasil yang andal. Aplikasi ini memberikan informasi yang jelas tentang masalah yang terdeteksi dan penanganannya, memungkinkan pemilik hewan untuk segera mengambil tindakan guna merawat hewan peliharaan mereka dengan efektif.</string>
+    <string name="CC">Cloud Computing</string>
+    <string name="MD">Pengembangan Aplikasi Mobile</string>
+    <string name="howtouse">Cara Penggunaan:\n1. Unggah gambar kulit hewan peliharaan Anda menggunakan foto dari galeri atau ambil gambar dengan kamera.\n2. Klik tombol pindai untuk mengidentifikasi penyakit.\n3. Hasil prediksi penyakit hewan peliharaan Anda akan muncul!</string>
+    <string name="ML">Machine Learning</string>
+    <string name="name_ml_1">Nama: Bunga Harumalia M</string>
+    <string name="contact_ml_1">Kontak: harumaliabunga@gmail.com</string>
+    <string name="name_ml_2">Nama: Hanivianka Amelia H</string>
+    <string name="contact_ml_2">Kontak: viankahamson@gmail.com</string>
+    <string name="name_ml_3">Nama: Linda Magdalena</string>
+    <string name="contact_ml_3">Kontak: lindamagdalena90@gmail.com</string>
+    <string name="name_cc_1">Nama: Nathan Tanoko</string>
+    <string name="contact_cc_1">Kontak: nathantanoko10@gmail.com</string>
+    <string name="name_cc_2">Nama: Timothy Henseputra</string>
+    <string name="contact_cc_2">Kontak: timothyhenseputra02@gmail.com</string>
+    <string name="name_md_1">Nama: Syifa Maulida</string>
+    <string name="contact_md_1">Kontak: syifamaulidaatmaja@gmail.com</string>
+    <string name="name_md_2">Nama: Finka Nindy A</string>
+    <string name="contact_md_2">Kontak: finkazhr@gmail.com</string>
+    <string name="howto">Bagaimana cara scan:</string>
+
 </resources>

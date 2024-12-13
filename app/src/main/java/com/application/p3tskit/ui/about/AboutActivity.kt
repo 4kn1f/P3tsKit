@@ -38,24 +38,24 @@ class AboutActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 when (position) {
                     0 -> {
-//                        binding.cardLearningPath1.visibility = View.VISIBLE
-//                        binding.cardLearningPath2.visibility = View.VISIBLE
-//                        binding.cardLearningPath3.visibility = View.VISIBLE
+                        binding.cardLearningPath1.visibility = View.VISIBLE
+                        binding.cardLearningPath2.visibility = View.VISIBLE
+                        binding.cardLearningPath3.visibility = View.VISIBLE
                     }
                     1 -> {
-//                        binding.cardLearningPath1.visibility = View.VISIBLE
-//                        binding.cardLearningPath2.visibility = View.GONE
-//                        binding.cardLearningPath3.visibility = View.GONE
+                        binding.cardLearningPath1.visibility = View.VISIBLE
+                        binding.cardLearningPath2.visibility = View.GONE
+                        binding.cardLearningPath3.visibility = View.GONE
                     }
                     2 -> {
-//                        binding.cardLearningPath1.visibility = View.GONE
-//                        binding.cardLearningPath2.visibility = View.VISIBLE
-//                        binding.cardLearningPath3.visibility = View.GONE
+                        binding.cardLearningPath1.visibility = View.GONE
+                        binding.cardLearningPath2.visibility = View.VISIBLE
+                        binding.cardLearningPath3.visibility = View.GONE
                     }
                     3 -> {
-//                        binding.cardLearningPath1.visibility = View.GONE
-//                        binding.cardLearningPath2.visibility = View.GONE
-//                        binding.cardLearningPath3.visibility = View.VISIBLE
+                        binding.cardLearningPath1.visibility = View.GONE
+                        binding.cardLearningPath2.visibility = View.GONE
+                        binding.cardLearningPath3.visibility = View.VISIBLE
                     }
                 }
             }

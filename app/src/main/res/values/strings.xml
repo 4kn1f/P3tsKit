@@ -52,7 +52,7 @@
     <string name="logo">Logo P3tsKit</string>
     <string name="with_love">Made with ❤️ by C242-PS104</string>
     <string name="short_desc">Your personal App for effortless \n\tcat and dog disease detection</string>
-    <string name="welcome">Welcome to the</string>
+    <string name="welcome">Welcome to The</string>
     <string name="email_error">Invalid email address</string>
     <string name="email_hint">xxx@gmail.com</string>
     <string name="password_error">Password must be at least 5 chars</string>
@@ -61,7 +61,23 @@
     <string name="p3tskit_desc">P3tsKit Application is an application developed by the C242-PS104 team to assist pet owners, especially those with dogs and cats, in identifying skin issues such as infections or wounds. By simply taking or uploading a photo, users can detect potential problems quickly and accurately. The application utilizes machine learning and cloud computing to process images efficiently, ensuring reliable results. It provides clear information about the detected issue and its treatment, enabling pet owners to take immediate action to care for their pets effectively.</string>
     <string name="CC">Cloud Computing</string>
     <string name="MD">Mobile Development</string>
-    <string name="howtouse">How To Use:\n1. Upload an image of a close-up of your pet\'s disease using a picture from your gallery or capture the image using the camera.\n2. Click on the scan button to identify the disease.\n3. Your pet\'s predicted result is out!</string>
+    <string name="howtouse">1. Upload an image of a close-up of your pet\'s disease using a picture from your gallery or capture the image using the camera.\n2. Click on the scan button to identify the disease.\n3. Your pet\'s predicted result is out!</string>
+    <string name="ML">Machine Learning</string>
+    <string name="name_ml_1">Name: Bunga Harumalia M</string>
+    <string name="contact_ml_1">Contact: harumaliabunga@gmail.com</string>
+    <string name="name_ml_2">Name: Hanivianka Amelia H</string>
+    <string name="contact_ml_2">Contact: viankahamson@gmail.com</string>
+    <string name="name_ml_3">Name: Linda Magdalena</string>
+    <string name="contact_ml_3">Contact: lindamagdalena90@gmail.com</string>
+    <string name="name_cc_1">Name: Nathan Tanoko</string>
+    <string name="contact_cc_1">Contact: nathantanoko10@gmail.com</string>
+    <string name="name_cc_2">Name: Timothy Henseputra</string>
+    <string name="contact_cc_2">Contact: timothyhenseputra02@gmail.com </string>
+    <string name="name_md_1">Name: Syifa Maulida</string>
+    <string name="contact_md_1">Contact: syifamaulidaatmaja@gmail.com </string>
+    <string name="name_md_2">Name: Finka Nindy A</string>
+    <string name="contact_md_2">Contact: finkazhr@gmail.com</string>
+    <string name="howto">How to scan:</string>
 
     <string-array name="spinner_items">
         <item>P3tsKit Developer</item>

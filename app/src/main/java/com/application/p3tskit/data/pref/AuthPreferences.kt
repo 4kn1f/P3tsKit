@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,7 @@ class AuthPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[EMAIL_KEY] = user.email
             preferences[TOKEN_KEY] = user.token
             preferences[LOGIN_KEY] = true
+            preferences[LOGIN_TIME_KEY] = user.loginTime
         }
     }
 
@@ -27,7 +29,8 @@ class AuthPreferences private constructor(private val dataStore: DataStore<Prefe
             AuthModel(
                 preferences[EMAIL_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
-                preferences[LOGIN_KEY]?: false
+                preferences[LOGIN_KEY]?: false,
+                preferences[LOGIN_TIME_KEY] ?: 0L
             )
         }
     }
@@ -45,6 +48,7 @@ class AuthPreferences private constructor(private val dataStore: DataStore<Prefe
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val LOGIN_TIME_KEY = longPreferencesKey("login_time")
 
         fun getInstance(context: Context): AuthPreferences {
             return INSTANCE ?: synchronized(this) {
