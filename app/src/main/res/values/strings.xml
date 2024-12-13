@@ -78,6 +78,11 @@
     <string name="name_md_2">Name: Finka Nindy A</string>
     <string name="contact_md_2">Contact: finkazhr@gmail.com</string>
     <string name="howto">How to scan:</string>
+    <string name="tiet_question_label">Enter a question</string>
+    <string name="tv_pick_topic_label">Choose topic</string>
+    <string name="fragment_qna_title">%s - Bert QA</string>
+    <string name="tv_inference_time_label">Inference Time: %d ms</string>
+    <string name="ib_send_label">Send button</string>
 
     <string-array name="spinner_items">
         <item>P3tsKit Developer</item>

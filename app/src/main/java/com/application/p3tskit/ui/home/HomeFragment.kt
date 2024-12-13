@@ -31,10 +31,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.cardCat.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_history)
-        }
-
         binding.tvSeeMoreNews.setOnClickListener {
             val intent = Intent(requireContext(), NewsActivity::class.java)
             intent.putExtra("EXTRA_NEWS_COUNT", 30)

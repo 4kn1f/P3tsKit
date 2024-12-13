@@ -37,7 +37,7 @@ class HomeViewModel(private val authRepository: AuthRepository, private val news
             _isLoading.value = true
             val result = newsRepository.getAllNews()
             result.onSuccess { newsResponse ->
-                _newsList.value = newsResponse.articles?.take(4)
+                _newsList.value = newsResponse.articles?.take(6)
             }.onFailure { exception ->
                 _errorMessage.value = "Error: ${exception.message}"
             }

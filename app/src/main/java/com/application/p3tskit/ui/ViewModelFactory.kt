@@ -8,7 +8,6 @@ import com.application.p3tskit.data.pref.dataStore
 import com.application.p3tskit.data.remote.repository.AuthRepository
 import com.application.p3tskit.data.remote.repository.DiagnoseRepository
 import com.application.p3tskit.remote.repository.NewsRepository
-import com.application.p3tskit.ui.history.HistoryViewModel
 import com.application.p3tskit.ui.home.HomeViewModel
 import com.application.p3tskit.ui.login.LoginViewModel
 import com.application.p3tskit.ui.profile.ProfilePreferences
@@ -31,9 +30,6 @@ class ViewModelFactory(private val authRepository: AuthRepository, private val d
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) ->{
                 ProfileViewModel(authRepository, profilePreferences) as T
-            }
-            modelClass.isAssignableFrom(HistoryViewModel::class.java) ->{
-                HistoryViewModel(diagnoseRepository) as T
             }
             modelClass.isAssignableFrom(NewsViewModel::class.java) ->{
                 NewsViewModel(newsRepository, authRepository) as T
