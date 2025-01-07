@@ -27,7 +27,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="100dp">
+        android:paddingTop="160dp">
 
       <androidx.cardview.widget.CardView
           android:id="@+id/cardView"
@@ -49,11 +49,36 @@
             android:padding="16dp">
 
           <TextView
+              android:id="@+id/tv_caption"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginTop="10dp"
+              android:text="@string/simple_caption"
+              android:textSize="18sp"
+              android:textStyle="bold"
+              android:fontFamily="@font/inter_semi_bold"/>
+
+          <TextView
+              android:id="@+id/tv_caption2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginTop="5dp"
+              android:layout_marginBottom="10dp"
+              android:text="@string/simple_caption2"
+              android:textColor="@color/blue"
+              android:textSize="18sp"
+              android:fontFamily="@font/inter_semi_bold"
+              android:textStyle="bold"/>
+
+          <TextView
               android:id="@+id/tv_email"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginTop="16dp"
+              android:layout_marginTop="2dp"
               android:contentDescription="@string/email"
+              android:fontFamily="@font/inter_semi_bold"
               android:text="@string/email"
               android:textSize="16sp" />
 
@@ -80,6 +105,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="16dp"
               android:contentDescription="@string/password"
+              android:fontFamily="@font/inter_semi_bold"
               android:text="@string/password"
               android:textSize="16sp" />
 
@@ -89,7 +115,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="4dp"
-              app:startIconDrawable="@drawable/ic_baseline_key_24">
+              app:startIconDrawable="@drawable/ic_baseline_key_24"
+              app:endIconMode="password_toggle">
 
             <com.application.p3tskit.ui.customview.CustomPassword
                 android:id="@+id/passwordEditText"
@@ -107,6 +134,7 @@
               android:layout_gravity="center"
               android:layout_marginTop="16dp"
               android:contentDescription="@string/login"
+              android:fontFamily="@font/inter_semi_bold"
               android:text="@string/login" />
 
         </LinearLayout>

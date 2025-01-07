@@ -83,6 +83,8 @@
     <string name="fragment_qna_title">%s - Bert QA</string>
     <string name="tv_inference_time_label">Inference Time: %d ms</string>
     <string name="ib_send_label">Send button</string>
+    <string name="simple_caption">Welcome P3tsKit user</string>
+    <string name="simple_caption2">Login to continue</string>
 
     <string-array name="spinner_items">
         <item>P3tsKit Developer</item>
