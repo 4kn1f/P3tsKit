@@ -10,7 +10,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="8dp">
+            android:elevation="12dp">
 
             <ImageView
                 android:id="@+id/result_image"
@@ -26,17 +26,17 @@
             android:orientation="vertical"
             android:padding="16dp"
             android:background="@drawable/white_bg"
-            android:elevation="8dp"
-            android:layout_marginTop="-50dp">
+            android:elevation="12dp"
+            android:layout_marginTop="-30dp">
 
-
-
-            <!-- Diagnose section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="16dp"
+                android:paddingBottom="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/diagnose_bg">
 
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/diagnose"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"
@@ -54,14 +54,11 @@
                     android:id="@+id/tv_predicted_class"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:textStyle="normal"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:layout_marginBottom="8dp"
                     android:fontFamily="@font/inter"/>
             </LinearLayout>
 
-            <!-- Description and symptoms -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,10 +71,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/description"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="5dp"
                     android:fontFamily="@font/inter_semi_bold"/>
 
                 <TextView
@@ -88,17 +85,16 @@
                     android:textColor="@color/black"
                     android:layout_marginBottom="12dp"
                     android:justificationMode="inter_word"
-                    android:textStyle="normal"
                     android:fontFamily="@font/inter"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/symptoms"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="5dp"
                     android:fontFamily="@font/inter_semi_bold"/>
 
                 <TextView
@@ -108,7 +104,6 @@
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:layout_marginBottom="12dp"
-                    android:textStyle="normal"
                     android:justificationMode="inter_word"
                     android:fontFamily="@font/inter"/>
 
@@ -116,10 +111,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/treatment"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="5dp"
                     android:fontFamily="@font/inter_semi_bold"/>
 
                 <TextView
@@ -129,7 +124,6 @@
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:layout_marginBottom="12dp"
-                    android:textStyle="normal"
                     android:justificationMode="inter_word"
                     android:fontFamily="@font/inter"/>
 
@@ -137,10 +131,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/note"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="5dp"
                     android:fontFamily="@font/inter_semi_bold"/>
 
                 <TextView
@@ -151,7 +145,6 @@
                     android:textSize="15sp"
                     android:justificationMode="inter_word"
                     android:layout_marginBottom="12dp"
-                    android:textStyle="normal"
                     android:fontFamily="@font/inter"/>
             </LinearLayout>
 
@@ -159,7 +152,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="16dp"
+                android:paddingBottom="12dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/source_bg">
 
@@ -167,25 +162,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/source"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="5dp"
                     android:fontFamily="@font/inter_semi_bold"/>
 
                 <TextView
                     android:id="@+id/tv_source"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
                     android:linksClickable="true"
+                    android:autoLink="web"
                     android:justificationMode="inter_word"
                     android:textColorLink="@color/navy"
                     android:textSize="15sp"
                     android:textStyle="normal"
                     android:layout_marginBottom="12dp"
                     android:fontFamily="@font/inter"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -208,20 +202,17 @@
                     android:textSize="17sp"
                     android:layout_marginBottom="12dp"
                     android:fontFamily="@font/inter"/>
-
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Progress bar in the center of the screen -->
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="gone"
-            android:indeterminate="true" />
-
+            android:indeterminate="true"/>
     </LinearLayout>
 
 </ScrollView>
