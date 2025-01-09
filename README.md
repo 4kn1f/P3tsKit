@@ -32,8 +32,8 @@ P3tsKit is a mobile application developed by the **C242-PS104 team** to assist p
   <tr>
     <td><img src="https://github.com/user-attachments/assets/50f0c054-e28f-4a2c-9bae-050e3161dcfe" alt="Home Screen" width="250"></td>
     <td><img src="https://github.com/user-attachments/assets/432efc39-3710-4059-a693-b315f39636f7" alt="Scan Feature Screen" width="250"></td>
-    <td><img src="https://github.com/user-attachments/assets/3d1f7ac4-fa7d-4c13-bfff-dd1f4149d7b4" alt="Detail Scan Feature Screen 1" width="250"></td>
-    <td><img src="https://github.com/user-attachments/assets/6ea56097-90df-4e99-992f-120a01580c91" alt="Detail Scan Feature Screen 2" width="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/3d1f7ac4-fa7d-4c13-bfff-dd1f4149d7b4" alt="Detail Scan Feature Screen" width="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/6ea56097-90df-4e99-992f-120a01580c91" alt="Detail Scan Feature Screen" width="250"></td>
   </tr>
   <tr>
     <td align="center"><b>Profile Screen</b></td>
